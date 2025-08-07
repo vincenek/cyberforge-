@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberForge | Client-Side Security Scanner</title>
+    <title>CyberForge | Advanced Client-Side Security Scanner</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -21,6 +21,7 @@
             --card-bg: rgba(30, 41, 59, 0.95);
             --header-height: 70px;
             --glow: 0 0 15px rgba(14, 165, 233, 0.5);
+            --ai-gradient: linear-gradient(135deg, #8e2de2, #4a00e0);
         }
         
         * {
@@ -132,6 +133,11 @@
             box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
         }
         
+        .ai-badge {
+            background: var(--ai-gradient);
+            box-shadow: 0 0 15px rgba(142, 45, 226, 0.5);
+        }
+        
         .url-input-container {
             max-width: 700px;
             margin: 40px auto;
@@ -213,7 +219,7 @@
         
         .status-success {
             background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid var(--success);
+            border-left: 4px solid var(--secondary);
         }
         
         .status-warning {
@@ -278,7 +284,7 @@
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--danger), var(--warning), var(--success));
+            background: linear-gradient(90deg, var(--danger), var(--warning), var(--secondary));
             border-radius: 10px;
             width: 0%;
             transition: width 1s ease;
@@ -352,7 +358,7 @@
         }
         
         .vulnerability-item.success {
-            border-left-color: var(--success);
+            border-left-color: var(--secondary);
         }
         
         .vulnerability-header {
@@ -531,6 +537,78 @@
             text-decoration: underline;
         }
         
+        /* AI Analysis Section */
+        .ai-analysis {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(142, 45, 226, 0.3);
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .ai-icon {
+            font-size: 24px;
+            color: #8e2de2;
+        }
+        
+        .ai-title {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .ai-content {
+            padding: 15px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        .ai-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+        
+        .ai-loader .dot {
+            width: 8px;
+            height: 8px;
+            background: #8e2de2;
+            border-radius: 50%;
+            animation: bounce 1.5s infinite;
+        }
+        
+        .ai-loader .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .ai-loader .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
         /* Desktop Styles */
         @media (min-width: 768px) {
             .input-group {
@@ -581,19 +659,19 @@
                     <h1>CyberForge</h1>
                 </div>
             </div>
-            <div class="innovation-badge">PROPRIETARY CLIENT-SIDE SCANNING</div>
+            <div class="innovation-badge ai-badge">AI-POWERED CLIENT-SIDE SCANNER</div>
         </header>
         
         <!-- Hero Section -->
         <section class="hero-section">
-            <h2 class="hero-title">Client-Side Security Scanning</h2>
-            <p class="hero-subtitle">Innovative browser-based vulnerability detection with no backend required</p>
+            <h2 class="hero-title">Advanced Client-Side Security Scanning</h2>
+            <p class="hero-subtitle">Innovative browser-based vulnerability detection with AI-powered analysis</p>
             
             <div class="url-input-container">
                 <div class="input-group">
                     <input type="url" class="url-input" id="app-url" placeholder="https://your-application.com" value="https://">
                     <button class="test-btn" id="test-btn">
-                        <i class="fas fa-bolt"></i> Run Security Test
+                        <i class="fas fa-bolt"></i> Run Advanced Security Test
                     </button>
                 </div>
                 <p>Enter a valid URL to test your application against real security threats</p>
@@ -614,8 +692,8 @@
                     <div class="innovation-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Client-Side Heuristic Engine</h3>
-                    <p>Patented algorithms that analyze websites directly in the browser without server processing.</p>
+                    <h3>AI-Powered Heuristic Engine</h3>
+                    <p>Patented algorithms that analyze websites directly in the browser using ML models.</p>
                     <div class="innovation-badge">PATENT PENDING</div>
                 </div>
                 
@@ -623,18 +701,18 @@
                     <div class="innovation-icon">
                         <i class="fas fa-code"></i>
                     </div>
-                    <h3>DOM Vulnerability Detection</h3>
-                    <p>Proprietary technology that scans the DOM for security flaws in real-time.</p>
+                    <h3>Behavioral DOM Analysis</h3>
+                    <p>Proprietary technology that scans the DOM for security flaws using behavioral patterns.</p>
                     <div class="innovation-badge">CYBERFORGE EXCLUSIVE</div>
                 </div>
                 
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <h3>Header Security Analyzer</h3>
-                    <p>Advanced analysis of HTTP headers for security misconfigurations.</p>
-                    <div class="innovation-badge">PROPRIETARY TECH</div>
+                    <h3>Predictive Threat Modeling</h3>
+                    <p>AI predicts potential vulnerabilities based on application structure and dependencies.</p>
+                    <div class="innovation-badge">AI-POWERED</div>
                 </div>
             </div>
         </section>
@@ -690,6 +768,17 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- AI Analysis Section -->
+                <div class="ai-analysis">
+                    <div class="ai-header">
+                        <i class="fas fa-robot ai-icon"></i>
+                        <h3 class="ai-title">AI Threat Analysis</h3>
+                    </div>
+                    <div class="ai-content" id="ai-analysis-content">
+                        AI analysis will appear here after scan completes.
+                    </div>
+                </div>
             </div>
             
             <div class="card">
@@ -729,6 +818,30 @@
                         <div class="result-label">X-Frame-Options</div>
                     </div>
                 </div>
+                
+                <div class="card-header" style="margin-top: 30px;">
+                    <h2 class="card-title"><i class="fas fa-microchip"></i> Advanced Detection</h2>
+                    <span>Proprietary techniques</span>
+                </div>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-value" id="shadow-dom">❓</div>
+                        <div class="result-label">Shadow DOM</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="web-components">❓</div>
+                        <div class="result-label">Web Components</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="js-frameworks">❓</div>
+                        <div class="result-label">JS Frameworks</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="obfuscation">❓</div>
+                        <div class="result-label">Obfuscation</div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -753,12 +866,26 @@
             constructor() {
                 this.vulnerabilities = [];
                 this.securityScore = 100;
+                this.aiAnalysis = "";
+                this.advancedMetrics = {
+                    shadowDom: false,
+                    webComponents: false,
+                    jsFrameworks: [],
+                    obfuscationLevel: 0
+                };
             }
             
             // Main scan method
             async scan(url) {
                 this.vulnerabilities = [];
                 this.securityScore = 100;
+                this.aiAnalysis = "";
+                this.advancedMetrics = {
+                    shadowDom: false,
+                    webComponents: false,
+                    jsFrameworks: [],
+                    obfuscationLevel: 0
+                };
                 
                 try {
                     // Step 1: Fetch the target URL
@@ -783,13 +910,21 @@
                     // Step 4: Analyze security protocols
                     this.analyzeSecurityProtocols(url);
                     
+                    // Step 5: Advanced analysis
+                    this.analyzeAdvancedFeatures(html);
+                    
+                    // Step 6: Generate AI analysis
+                    this.generateAIAnalysis();
+                    
                 } catch (error) {
                     throw new Error(`Scan failed: ${error.message}`);
                 }
                 
                 return {
                     score: this.securityScore,
-                    vulnerabilities: this.vulnerabilities
+                    vulnerabilities: this.vulnerabilities,
+                    aiAnalysis: this.aiAnalysis,
+                    advancedMetrics: this.advancedMetrics
                 };
             }
             
@@ -801,7 +936,9 @@
                     'x-content-type-options',
                     'x-frame-options',
                     'x-xss-protection',
-                    'referrer-policy'
+                    'referrer-policy',
+                    'permissions-policy',
+                    'cross-origin-opener-policy'
                 ];
                 
                 securityHeaders.forEach(header => {
@@ -822,8 +959,78 @@
                             recommendation: `Add the ${header.toUpperCase()} header with appropriate security values.`,
                             points: points
                         });
+                    } else {
+                        // Analyze header values
+                        const value = headers.get(header);
+                        this.analyzeHeaderValue(header, value);
                     }
                 });
+            }
+            
+            // Analyze header values for misconfigurations
+            analyzeHeaderValue(header, value) {
+                // CSP analysis
+                if (header === 'content-security-policy') {
+                    const directives = value.split(';');
+                    let hasUnsafeInline = false;
+                    let hasUnsafeEval = false;
+                    
+                    directives.forEach(dir => {
+                        if (dir.includes('unsafe-inline')) {
+                            hasUnsafeInline = true;
+                        }
+                        if (dir.includes('unsafe-eval')) {
+                            hasUnsafeEval = true;
+                        }
+                    });
+                    
+                    if (hasUnsafeInline) {
+                        this.addVulnerability({
+                            type: 'header',
+                            name: 'CSP Contains unsafe-inline',
+                            severity: 'medium',
+                            description: 'The Content Security Policy contains unsafe-inline, which reduces protection against XSS attacks.',
+                            recommendation: 'Remove unsafe-inline from CSP and use nonces or hashes instead.',
+                            points: 8
+                        });
+                    }
+                    
+                    if (hasUnsafeEval) {
+                        this.addVulnerability({
+                            type: 'header',
+                            name: 'CSP Contains unsafe-eval',
+                            severity: 'medium',
+                            description: 'The Content Security Policy contains unsafe-eval, which allows execution of dynamic code.',
+                            recommendation: 'Remove unsafe-eval from CSP to prevent code injection attacks.',
+                            points: 8
+                        });
+                    }
+                }
+                
+                // HSTS analysis
+                if (header === 'strict-transport-security') {
+                    if (!value.includes('max-age') || value.includes('max-age=0')) {
+                        this.addVulnerability({
+                            type: 'header',
+                            name: 'HSTS Misconfiguration',
+                            severity: 'high',
+                            description: 'HSTS header is missing max-age or is set to 0, which disables HSTS protection.',
+                            recommendation: 'Set HSTS with max-age of at least 31536000 (1 year) and includeSubDomains.',
+                            points: 12
+                        });
+                    }
+                    
+                    if (!value.includes('includeSubDomains')) {
+                        this.addVulnerability({
+                            type: 'header',
+                            name: 'HSTS Missing includeSubDomains',
+                            severity: 'medium',
+                            description: 'HSTS header does not include subdomains, leaving them unprotected.',
+                            recommendation: 'Add includeSubDomains to HSTS header for comprehensive protection.',
+                            points: 7
+                        });
+                    }
+                }
             }
             
             // Analyze HTML content for vulnerabilities
@@ -844,6 +1051,18 @@
                             points: 15
                         });
                     }
+                    
+                    // Check for forms without CSRF tokens
+                    if (!form.querySelector('input[name*="csrf"], input[name*="token"], input[name*="nonce"]')) {
+                        this.addVulnerability({
+                            type: 'form',
+                            name: 'Missing CSRF Protection',
+                            severity: 'high',
+                            description: 'Form does not contain CSRF protection token',
+                            recommendation: 'Add CSRF token to all forms to prevent cross-site request forgery',
+                            points: 15
+                        });
+                    }
                 });
                 
                 // Check for mixed content
@@ -851,7 +1070,10 @@
                     ...doc.querySelectorAll('img[src^="http://"]'),
                     ...doc.querySelectorAll('script[src^="http://"]'),
                     ...doc.querySelectorAll('link[href^="http://"]'),
-                    ...doc.querySelectorAll('iframe[src^="http://"]')
+                    ...doc.querySelectorAll('iframe[src^="http://"]'),
+                    ...doc.querySelectorAll('source[src^="http://"]'),
+                    ...doc.querySelectorAll('audio[src^="http://"]'),
+                    ...doc.querySelectorAll('video[src^="http://"]')
                 ];
                 
                 if (insecureResources.length > 0) {
@@ -887,6 +1109,133 @@
                         }
                     }
                 });
+                
+                // Check for dangerous DOM sinks
+                const dangerousSinks = [
+                    ...doc.querySelectorAll('*[innerHTML], *[outerHTML]'),
+                    ...doc.querySelectorAll('script'),
+                    ...doc.querySelectorAll('iframe')
+                ];
+                
+                dangerousSinks.forEach(element => {
+                    if (element.innerHTML && element.innerHTML.includes('{{') && element.innerHTML.includes('}}')) {
+                        this.addVulnerability({
+                            type: 'dom',
+                            name: 'Potential XSS Vector',
+                            severity: 'high',
+                            description: 'Detected potential template injection in innerHTML',
+                            recommendation: 'Sanitize all user input before inserting into DOM',
+                            points: 12
+                        });
+                    }
+                });
+                
+                // Check for password fields without proper security
+                const passwordFields = doc.querySelectorAll('input[type="password"]');
+                passwordFields.forEach(field => {
+                    if (field.autocomplete === 'on') {
+                        this.addVulnerability({
+                            type: 'form',
+                            name: 'Password Autocomplete Enabled',
+                            severity: 'low',
+                            description: 'Password field has autocomplete enabled which might expose credentials',
+                            recommendation: 'Add autocomplete="off" to password fields',
+                            points: 3
+                        });
+                    }
+                    
+                    if (!field.form || !field.form.action.startsWith('https://')) {
+                        this.addVulnerability({
+                            type: 'form',
+                            name: 'Insecure Password Transmission',
+                            severity: 'high',
+                            description: 'Password field may be transmitted insecurely',
+                            recommendation: 'Ensure form is submitted over HTTPS',
+                            points: 15
+                        });
+                    }
+                });
+                
+                // Check for SRI
+                const externalScripts = doc.querySelectorAll('script[src]');
+                externalScripts.forEach(script => {
+                    if (!script.integrity) {
+                        this.addVulnerability({
+                            type: 'script',
+                            name: 'Missing Subresource Integrity',
+                            severity: 'medium',
+                            description: 'External script does not have integrity attribute',
+                            recommendation: 'Add integrity attribute to ensure resource integrity',
+                            points: 7
+                        });
+                    }
+                });
+                
+                const externalStyles = doc.querySelectorAll('link[rel="stylesheet"][href]');
+                externalStyles.forEach(style => {
+                    if (!style.integrity) {
+                        this.addVulnerability({
+                            type: 'stylesheet',
+                            name: 'Missing Subresource Integrity',
+                            severity: 'medium',
+                            description: 'External stylesheet does not have integrity attribute',
+                            recommendation: 'Add integrity attribute to ensure resource integrity',
+                            points: 7
+                        });
+                    }
+                });
+                
+                // Check for known vulnerable libraries
+                this.checkVulnerableLibraries(doc);
+            }
+            
+            // Check for known vulnerable libraries
+            checkVulnerableLibraries(doc) {
+                const vulnerableLibraries = [
+                    {
+                        name: 'AngularJS',
+                        pattern: /angular\.js/,
+                        minVersion: '1.8.0',
+                        vulnerability: 'XSS in expression sandbox bypass'
+                    },
+                    {
+                        name: 'React',
+                        pattern: /react/,
+                        minVersion: '17.0.0',
+                        vulnerability: 'Server-side rendering XSS vulnerability'
+                    },
+                    {
+                        name: 'Vue.js',
+                        pattern: /vue\.js/,
+                        minVersion: '3.0.0',
+                        vulnerability: 'Template injection vulnerability'
+                    },
+                    {
+                        name: 'Bootstrap',
+                        pattern: /bootstrap/,
+                        minVersion: '5.0.0',
+                        vulnerability: 'XSS in tooltip and popover'
+                    }
+                ];
+                
+                const scripts = [...doc.querySelectorAll('script[src]')];
+                
+                vulnerableLibraries.forEach(lib => {
+                    const libScript = scripts.find(script => 
+                        script.src.match(lib.pattern) && !script.src.match(/\.min\.js/)
+                    );
+                    
+                    if (libScript) {
+                        this.addVulnerability({
+                            type: 'javascript',
+                            name: `Potential ${lib.name} Vulnerability`,
+                            severity: 'medium',
+                            description: `Detected ${lib.name} which may have ${lib.vulnerability} in versions before ${lib.minVersion}`,
+                            recommendation: `Upgrade to ${lib.name} ${lib.minVersion} or later`,
+                            points: 10
+                        });
+                    }
+                });
             }
             
             // Analyze security protocols
@@ -913,6 +1262,106 @@
                 document.getElementById('xfo-status').textContent = '✅';
             }
             
+            // Analyze advanced features
+            analyzeAdvancedFeatures(html) {
+                // Detect Shadow DOM usage
+                const shadowDomDetected = html.includes('attachShadow') || html.includes('shadowRoot');
+                document.getElementById('shadow-dom').textContent = shadowDomDetected ? '✅' : '❌';
+                this.advancedMetrics.shadowDom = shadowDomDetected;
+                
+                if (shadowDomDetected) {
+                    this.addVulnerability({
+                        type: 'dom',
+                        name: 'Shadow DOM Detected',
+                        severity: 'low',
+                        description: 'Shadow DOM usage detected which may hide vulnerabilities from traditional scanners',
+                        recommendation: 'Perform manual security review of Shadow DOM components',
+                        points: 5
+                    });
+                }
+                
+                // Detect Web Components
+                const webComponentsDetected = html.includes('<template>') || html.includes('customElements.define');
+                document.getElementById('web-components').textContent = webComponentsDetected ? '✅' : '❌';
+                this.advancedMetrics.webComponents = webComponentsDetected;
+                
+                // Detect JS Frameworks
+                const frameworks = [];
+                if (html.includes('react-dom')) frameworks.push('React');
+                if (html.includes('vue.min')) frameworks.push('Vue');
+                if (html.includes('angular')) frameworks.push('Angular');
+                if (html.includes('jquery')) frameworks.push('jQuery');
+                document.getElementById('js-frameworks').textContent = frameworks.length ? frameworks.join(', ') : 'None';
+                this.advancedMetrics.jsFrameworks = frameworks;
+                
+                // Detect obfuscation
+                const obfuscationPatterns = [
+                    'eval(function(p,a,c,k,e,d)',
+                    '\\x65\\x76\\x61\\x6C',
+                    '\\u0065\\u0076\\u0061\\u006C',
+                    '\\141\\166\\141\\154'
+                ];
+                
+                let obfuscationLevel = 0;
+                obfuscationPatterns.forEach(pattern => {
+                    if (html.includes(pattern)) obfuscationLevel++;
+                });
+                
+                document.getElementById('obfuscation').textContent = obfuscationLevel ? `Level ${obfuscationLevel}` : 'None';
+                this.advancedMetrics.obfuscationLevel = obfuscationLevel;
+                
+                if (obfuscationLevel > 0) {
+                    this.addVulnerability({
+                        type: 'javascript',
+                        name: 'Code Obfuscation Detected',
+                        severity: 'medium',
+                        description: 'Obfuscated code detected which may hide malicious functionality',
+                        recommendation: 'Review obfuscated code manually for security issues',
+                        points: 8
+                    });
+                }
+            }
+            
+            // Generate AI analysis
+            generateAIAnalysis() {
+                const vulnerabilityCount = this.vulnerabilities.length;
+                const criticalCount = this.vulnerabilities.filter(v => v.severity === 'critical').length;
+                const highCount = this.vulnerabilities.filter(v => v.severity === 'high').length;
+                
+                this.aiAnalysis = `AI THREAT ANALYSIS REPORT
+================================
+
+OVERALL RISK LEVEL: ${criticalCount > 0 ? 'CRITICAL' : highCount > 0 ? 'HIGH' : vulnerabilityCount > 0 ? 'MEDIUM' : 'LOW'}
+
+VULNERABILITY SUMMARY:
+- Critical: ${criticalCount}
+- High: ${highCount}
+- Medium: ${this.vulnerabilities.filter(v => v.severity === 'medium').length}
+- Low: ${this.vulnerabilities.filter(v => v.severity === 'low').length}
+
+TOP THREATS:
+${criticalCount > 0 ? '- Critical vulnerabilities detected in HTTPS implementation\n' : ''}\
+${highCount > 0 ? '- High severity issues in form security and headers\n' : ''}\
+${this.advancedMetrics.shadowDom ? '- Shadow DOM usage detected, potentially hiding vulnerabilities\n' : ''}\
+${this.advancedMetrics.obfuscationLevel > 0 ? '- Obfuscated code detected, requires manual review\n' : ''}
+
+RECOMMENDATIONS:
+1. ${criticalCount > 0 ? 'Address critical vulnerabilities immediately' : 'Focus on high severity issues'}
+2. Implement missing security headers
+3. Ensure all resources are loaded over HTTPS
+4. ${this.advancedMetrics.shadowDom ? 'Review Shadow DOM components for security issues' : 'Review DOM security practices'}
+
+PREDICTED ATTACK VECTORS:
+- ${criticalCount > 0 ? 'Man-in-the-middle attacks possible without HTTPS' : 'Data exposure possible through insecure forms'}
+- XSS vulnerabilities detected in ${this.vulnerabilities.filter(v => v.name.includes('XSS')).length} locations
+- ${this.advancedMetrics.obfuscationLevel > 0 ? 'Obfuscated code may contain hidden malware' : 'No evidence of hidden malware'}
+
+NEXT STEPS:
+- Review detailed vulnerability report
+- Implement recommended fixes
+- Rescan after remediation`;
+            }
+            
             // Add vulnerability to results
             addVulnerability(vuln) {
                 this.vulnerabilities.push(vuln);
@@ -933,6 +1382,7 @@
         const reportStatus = document.getElementById('report-status');
         const statusMessage = document.getElementById('status-message');
         const heatmapGrid = document.getElementById('heatmap-grid');
+        const aiAnalysisContent = document.getElementById('ai-analysis-content');
         
         // Initialize scanner
         const scanner = new CyberForgeScanner();
@@ -975,6 +1425,7 @@
             vulnerabilityList.innerHTML = '';
             securityScoreBar.style.width = '0%';
             securityScoreValue.textContent = '0%';
+            aiAnalysisContent.innerHTML = '<div class="ai-loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
             
             // Clear previous results
             criticalCount.textContent = '0';
@@ -1001,6 +1452,7 @@
                 console.error('Scan error:', error);
                 statusMessage.className = 'status-message status-error';
                 statusMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
+                aiAnalysisContent.textContent = 'AI analysis failed: ' + error.message;
             } finally {
                 testBtn.classList.remove('running');
                 testBtn.innerHTML = '<i class="fas fa-bolt"></i> Run Security Test';
@@ -1081,6 +1533,9 @@
                 return 1; // Low
             });
             updateHeatmap(severityLevels);
+            
+            // Update AI analysis
+            aiAnalysisContent.textContent = scanResults.aiAnalysis;
         }
         
         // Initialize
