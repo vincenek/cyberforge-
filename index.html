@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberForge | Proprietary Security Testing</title>
+    <title>CyberForge | Enterprise Security Testing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -23,6 +23,7 @@
             --glow: 0 0 15px rgba(14, 165, 233, 0.6);
             --success: #10b981;
             --atie-glow: 0 0 20px rgba(139, 92, 246, 0.7);
+            --header-height: 70px;
         }
         
         * {
@@ -36,46 +37,50 @@
             background: linear-gradient(135deg, #0f172a, #1e293b);
             color: var(--light);
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
             overflow-x: hidden;
             line-height: 1.6;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
         
+        /* Header - Mobile First */
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            margin-bottom: 20px;
-            position: relative;
+            height: var(--header-height);
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
         
         .logo-icon {
             background: var(--cyber-blue);
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 20px;
             box-shadow: var(--glow);
-            transform: rotate(45deg);
-        }
-        
-        .logo-icon i {
-            transform: rotate(-45deg);
         }
         
         .logo-text {
@@ -84,35 +89,57 @@
         }
         
         .logo h1 {
-            font-size: 36px;
+            font-size: 22px;
             font-weight: 800;
             background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
         }
         
-        .tagline {
-            color: #94a3b8;
-            font-size: 18px;
-            margin-top: 2px;
-            font-weight: 500;
+        .mobile-menu-btn {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 24px;
+            cursor: pointer;
+            display: block;
         }
         
         .nav-links {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
             display: flex;
-            gap: 25px;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 15px;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-links.active {
+            transform: translateY(0);
+            opacity: 1;
         }
         
         .nav-link {
             color: #cbd5e1;
             text-decoration: none;
             font-weight: 500;
-            font-size: 17px;
-            transition: all 0.3s ease;
-            padding: 8px 15px;
+            font-size: 18px;
+            padding: 10px 20px;
             border-radius: 8px;
+            width: 90%;
+            text-align: center;
+            transition: all 0.3s ease;
         }
         
         .nav-link:hover {
@@ -120,91 +147,58 @@
             color: var(--cyber-blue);
         }
         
+        /* Hero Section */
         .hero-section {
+            padding-top: calc(var(--header-height) + 40px);
+            padding: 90px 20px 60px;
             text-align: center;
-            padding: 60px 20px;
-            margin: 30px 0;
-            border-radius: 20px;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
         
         .hero-title {
-            font-size: 52px;
+            font-size: 32px;
             font-weight: 800;
             margin-bottom: 20px;
             background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
         
         .hero-subtitle {
-            font-size: 22px;
+            font-size: 18px;
             color: #94a3b8;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto 30px;
             font-weight: 400;
         }
         
-        .proprietary-badge {
-            display: inline-block;
-            background: linear-gradient(to right, var(--cyber-purple), #ec4899);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            margin: 5px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: var(--atie-glow);
-        }
-        
-        .innovation-highlights {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 30px 0;
-        }
-        
-        .innovation-tag {
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
         .url-input-container {
-            max-width: 800px;
-            margin: 40px auto;
+            max-width: 700px;
+            margin: 30px auto;
             background: rgba(15, 23, 42, 0.7);
-            padding: 30px;
+            padding: 25px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .input-group {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 15px;
             margin-bottom: 20px;
         }
         
         .url-input {
-            flex: 1;
+            width: 100%;
             padding: 16px 20px;
             border-radius: 12px;
             border: 2px solid rgba(148, 163, 184, 0.3);
             background: rgba(15, 23, 42, 0.8);
             color: var(--light);
-            font-size: 18px;
+            font-size: 16px;
             outline: none;
         }
         
@@ -214,9 +208,9 @@
         }
         
         .test-btn {
-            padding: 16px 40px;
+            padding: 16px 30px;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -224,6 +218,10 @@
             background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
             color: white;
             box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .test-btn:hover {
@@ -242,17 +240,18 @@
             100% { opacity: 1; }
         }
         
+        /* Dashboard */
         .dashboard {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 25px;
             margin-bottom: 30px;
         }
         
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
@@ -260,21 +259,18 @@
         }
         
         .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .card-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--light);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .card-title i {
@@ -282,11 +278,11 @@
         }
         
         .progress-container {
-            margin: 30px 0;
+            margin: 25px 0;
         }
         
         .progress-bar {
-            height: 20px;
+            height: 16px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -309,8 +305,51 @@
             font-size: 14px;
         }
         
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .result-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-value {
+            font-size: 32px;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+        
+        .result-label {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        .result-critical {
+            color: var(--danger);
+        }
+        
+        .result-high {
+            color: var(--warning);
+        }
+        
+        .result-medium {
+            color: #84cc16;
+        }
+        
+        .result-low {
+            color: var(--cyber-blue);
+        }
+        
+        /* Vulnerability List */
         .vulnerability-list {
-            margin-top: 30px;
+            margin-top: 25px;
         }
         
         .vulnerability-item {
@@ -338,7 +377,7 @@
         }
         
         .vulnerability-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -349,12 +388,13 @@
             color: #94a3b8;
             margin-top: 10px;
             line-height: 1.6;
+            font-size: 14px;
         }
         
         .vulnerability-severity {
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
         }
         
@@ -378,86 +418,19 @@
             color: var(--cyber-blue);
         }
         
-        .test-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .result-card {
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .result-value {
-            font-size: 42px;
-            font-weight: 800;
-            margin: 15px 0;
-        }
-        
-        .result-label {
-            color: #94a3b8;
-            font-size: 16px;
-        }
-        
-        .result-critical {
-            color: var(--danger);
-        }
-        
-        .result-high {
-            color: var(--warning);
-        }
-        
-        .result-medium {
-            color: #84cc16;
-        }
-        
-        .result-low {
-            color: var(--cyber-blue);
-        }
-        
-        .security-tips {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 16px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .tips-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--success);
-        }
-        
-        .tips-list {
-            padding-left: 20px;
-        }
-        
-        .tips-list li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        
+        /* Attack Console */
         .attack-console {
             background: rgba(15, 23, 42, 0.7);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 30px;
+            margin-top: 25px;
         }
         
         .attack-buttons {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin-top: 20px;
         }
         
@@ -474,13 +447,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-height: 120px;
+            gap: 8px;
+            min-height: 100px;
             border: 2px solid transparent;
+            font-size: 14px;
         }
         
         .attack-btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             border-color: var(--cyber-blue);
             box-shadow: var(--glow);
         }
@@ -491,202 +465,36 @@
         }
         
         .attack-icon {
-            font-size: 32px;
+            font-size: 24px;
             color: var(--danger);
         }
         
         .attack-name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
         }
         
-        /* Proprietary Technology Section */
-        .proprietary-tech {
-            margin: 50px 0;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(139, 92, 246, 0.1));
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: var(--light);
-            font-weight: 700;
-        }
-        
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .tech-card {
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tech-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--cyber-purple);
-            box-shadow: var(--atie-glow);
-        }
-        
-        .tech-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: var(--cyber-purple);
-        }
-        
-        .tech-card h3 {
-            color: var(--light);
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-        
-        .tech-card p {
-            color: #94a3b8;
-            font-size: 17px;
-            line-height: 1.7;
-        }
-        
-        /* ATIE Visualization */
-        .atie-visualization {
-            margin: 40px 0;
-            padding: 30px;
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 20px;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            min-height: 300px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .viz-title {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--light);
-        }
-        
-        .viz-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 300px;
-        }
-        
-        .viz-canvas {
-            width: 100%;
-            height: 300px;
-            position: relative;
-        }
-        
-        .node {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            z-index: 2;
-            box-shadow: var(--atie-glow);
-            animation: pulse 2s infinite;
-        }
-        
-        .node-1 {
-            top: 20%;
-            left: 20%;
-            background: rgba(14, 165, 233, 0.3);
-            border: 2px solid var(--cyber-blue);
-        }
-        
-        .node-2 {
-            top: 20%;
-            right: 20%;
-            background: rgba(139, 92, 246, 0.3);
-            border: 2px solid var(--cyber-purple);
-        }
-        
-        .node-3 {
-            bottom: 20%;
-            left: 20%;
-            background: rgba(239, 68, 68, 0.3);
-            border: 2px solid var(--danger);
-        }
-        
-        .node-4 {
-            bottom: 20%;
-            right: 20%;
-            background: rgba(34, 197, 94, 0.3);
-            border: 2px solid var(--cyber-green);
-        }
-        
-        .node-center {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: rgba(139, 92, 246, 0.5);
-            border: 3px solid var(--cyber-purple);
-            animation: glow 3s infinite alternate;
-        }
-        
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-            }
-            to {
-                box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
-            }
-        }
-        
-        .connection {
-            position: absolute;
-            height: 3px;
-            background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
-            transform-origin: 0 0;
-            z-index: 1;
-            animation: flow 3s infinite;
-        }
-        
-        @keyframes flow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        
-        /* Heatmap Visualization */
+        /* Heatmap */
         .heatmap-container {
-            margin: 40px 0;
-            padding: 30px;
+            margin: 30px 0;
+            padding: 20px;
             background: rgba(15, 23, 42, 0.8);
-            border-radius: 20px;
+            border-radius: 16px;
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
         
         .heatmap-title {
             text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 18px;
+            margin-bottom: 15px;
             color: var(--light);
         }
         
         .heatmap-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
-            gap: 5px;
-            max-width: 600px;
+            gap: 4px;
+            max-width: 100%;
             margin: 0 auto;
         }
         
@@ -707,71 +515,179 @@
         .severity-3 { background: rgba(245, 158, 11, 0.7); }
         .severity-4 { background: rgba(239, 68, 68, 0.9); }
         
+        /* Proprietary Section */
+        .proprietary-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: var(--light);
+            font-weight: 700;
+        }
+        
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .innovation-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .innovation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyber-purple);
+            box-shadow: var(--atie-glow);
+        }
+        
+        .innovation-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--cyber-purple);
+        }
+        
+        .innovation-card h3 {
+            color: var(--light);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .innovation-card p {
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .proprietary-badge {
+            display: inline-block;
+            background: linear-gradient(to right, var(--cyber-purple), #ec4899);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        /* Footer */
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             color: #94a3b8;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 50px;
-            font-size: 16px;
+            margin-top: 40px;
+            font-size: 14px;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
         }
         
         .footer-link {
             color: var(--cyber-blue);
             text-decoration: none;
             transition: all 0.3s ease;
+            font-size: 14px;
         }
         
         .footer-link:hover {
             text-decoration: underline;
         }
         
-        @media (max-width: 1100px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .attack-buttons {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 36px;
-            }
-            
-            .hero-subtitle {
-                font-size: 18px;
-            }
-            
-            .nav-links {
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
                 display: none;
             }
             
+            .nav-links {
+                position: static;
+                flex-direction: row;
+                background: transparent;
+                backdrop-filter: none;
+                padding: 0;
+                transform: none;
+                opacity: 1;
+                width: auto;
+                box-shadow: none;
+                display: flex;
+            }
+            
+            .nav-link {
+                width: auto;
+                padding: 8px 15px;
+                font-size: 16px;
+            }
+            
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
             .input-group {
-                flex-direction: column;
+                flex-direction: row;
+            }
+            
+            .url-input {
+                font-size: 16px;
+            }
+            
+            .test-btn {
+                padding: 16px 40px;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
             
             .attack-buttons {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
             }
             
-            .heatmap-grid {
-                grid-template-columns: repeat(6, 1fr);
+            .innovation-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .container {
+                padding: 0 30px;
+            }
+            
+            .hero-title {
+                font-size: 48px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <header>
             <div class="logo">
                 <div class="logo-icon">
@@ -779,10 +695,14 @@
                 </div>
                 <div class="logo-text">
                     <h1>CyberForge</h1>
-                    <div class="tagline">Proprietary Application Security Testing</div>
                 </div>
             </div>
-            <div class="nav-links">
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="nav-links">
                 <a href="#" class="nav-link">Platform</a>
                 <a href="#" class="nav-link">Solutions</a>
                 <a href="#" class="nav-link">Pricing</a>
@@ -791,21 +711,10 @@
             </div>
         </header>
         
+        <!-- Hero Section -->
         <section class="hero-section">
-            <h2 class="hero-title">Proprietary Security Intelligence</h2>
-            <p class="hero-subtitle">Test your application against AI-powered threats with our patented Adaptive Threat Intelligence Engine</p>
-            
-            <div class="innovation-highlights">
-                <div class="innovation-tag">
-                    <i class="fas fa-star"></i> PATENTED TECHNOLOGY
-                </div>
-                <div class="innovation-tag">
-                    <i class="fas fa-brain"></i> AI-POWERED THREATS
-                </div>
-                <div class="innovation-tag">
-                    <i class="fas fa-bolt"></i> REAL-TIME HEATMAPS
-                </div>
-            </div>
+            <h2 class="hero-title">Enterprise Application Security Testing</h2>
+            <p class="hero-subtitle">Test your application against AI-powered threats with our patented security technology</p>
             
             <div class="url-input-container">
                 <div class="input-group">
@@ -818,68 +727,41 @@
             </div>
         </section>
         
-        <!-- Proprietary Technology Section -->
-        <section class="proprietary-tech">
+        <!-- Proprietary Technology -->
+        <section class="proprietary-section">
             <h2 class="section-title">Our Proprietary Innovations</h2>
             
-            <div class="tech-grid">
-                <div class="tech-card">
-                    <div class="tech-icon">
+            <div class="innovation-grid">
+                <div class="innovation-card">
+                    <div class="innovation-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Adaptive Threat Intelligence Engine (ATIE)</h3>
-                    <p>Our patented AI system evolves attack patterns in real-time based on your application's defenses, creating increasingly sophisticated challenges.</p>
+                    <h3>Adaptive Threat Engine</h3>
+                    <p>Patented AI system that evolves attack patterns based on your application's defenses.</p>
                     <span class="proprietary-badge">US PATENT #11,476,302</span>
                 </div>
                 
-                <div class="tech-card">
-                    <div class="tech-icon">
+                <div class="innovation-card">
+                    <div class="innovation-icon">
                         <i class="fas fa-fire"></i>
                     </div>
-                    <h3>Real-time Vulnerability Heatmap</h3>
-                    <p>Visualize security weaknesses as they're discovered during attacks with our proprietary heatmap technology.</p>
+                    <h3>Vulnerability Heatmap</h3>
+                    <p>Visualize security weaknesses in real-time with our proprietary heatmap technology.</p>
                     <span class="proprietary-badge">CYBERFORGE EXCLUSIVE</span>
                 </div>
                 
-                <div class="tech-card">
-                    <div class="tech-icon">
+                <div class="innovation-card">
+                    <div class="innovation-icon">
                         <i class="fas fa-shield-virus"></i>
                     </div>
-                    <h3>Zero-Day Simulation Module</h3>
-                    <p>Test your application against unknown vulnerabilities using our proprietary heuristic analysis algorithms.</p>
+                    <h3>Zero-Day Simulation</h3>
+                    <p>Test against unknown vulnerabilities using our heuristic analysis algorithms.</p>
                     <span class="proprietary-badge">PROPRIETARY TECH</span>
                 </div>
             </div>
         </section>
         
-        <!-- ATIE Visualization -->
-        <section class="atie-visualization">
-            <h3 class="viz-title">Adaptive Threat Intelligence Engine (ATIE)</h3>
-            <div class="viz-container">
-                <div class="viz-canvas">
-                    <div class="node node-center">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="node node-1">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="node node-2">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="node node-3">
-                        <i class="fas fa-user-secret"></i>
-                    </div>
-                    <div class="node node-4">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <div class="connection" id="conn1"></div>
-                    <div class="connection" id="conn2"></div>
-                    <div class="connection" id="conn3"></div>
-                    <div class="connection" id="conn4"></div>
-                </div>
-            </div>
-        </section>
-        
+        <!-- Dashboard -->
         <div class="dashboard">
             <div class="card">
                 <div class="card-header">
@@ -898,14 +780,14 @@
                     </div>
                 </div>
                 
-                <div class="test-results">
+                <div class="results-grid">
                     <div class="result-card">
                         <div class="result-value result-critical" id="critical-count">0</div>
                         <div class="result-label">Critical Vulnerabilities</div>
                     </div>
                     <div class="result-card">
                         <div class="result-value result-high" id="high-count">0</div>
-                        <div class="result-label">High Severity Issues</div>
+                        <div class="result-label">High Severity</div>
                     </div>
                     <div class="result-card">
                         <div class="result-value result-medium" id="medium-count">0</div>
@@ -934,7 +816,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title"><i class="fas fa-bug"></i> Vulnerability Details</h2>
+                    <h2 class="card-title"><i class="fas fa-bug"></i> Vulnerability Analysis</h2>
                     <span>Test results</span>
                 </div>
                 
@@ -954,7 +836,7 @@
                         <div class="attack-btn" data-test="csrf">
                             <i class="fas fa-exchange-alt attack-icon"></i>
                             <div class="attack-name">CSRF</div>
-                            <div>Cross-Site Request Forgery</div>
+                            <div>Request Forgery</div>
                         </div>
                         <div class="attack-btn" data-test="auth">
                             <i class="fas fa-user-lock attack-icon"></i>
@@ -981,24 +863,13 @@
                         <!-- Heatmap cells will be generated by JS -->
                     </div>
                 </div>
-                
-                <div class="security-tips">
-                    <div class="tips-title">
-                        <i class="fas fa-lightbulb"></i>
-                        <h3>Security Recommendations</h3>
-                    </div>
-                    <ul class="tips-list" id="security-tips">
-                        <li>Run security tests to get personalized recommendations for your application</li>
-                        <li>Keep all software and dependencies up to date</li>
-                        <li>Implement proper input validation and sanitization</li>
-                    </ul>
-                </div>
             </div>
         </div>
         
+        <!-- Footer -->
         <footer>
             <h3>CyberForge Security Platform</h3>
-            <p>Proprietary Application Security Testing for the Modern Development Lifecycle</p>
+            <p>Proprietary Application Security Testing</p>
             
             <div class="footer-links">
                 <a href="#" class="footer-link">Privacy Policy</a>
@@ -1013,63 +884,59 @@
     </div>
     
     <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
         // Sample vulnerabilities data
         const vulnerabilities = [
             {
                 id: "xss",
                 title: "Cross-Site Scripting (XSS) Vulnerability",
                 severity: "critical",
-                description: "Your application is vulnerable to cross-site scripting attacks. Attackers could inject malicious scripts that run in users' browsers, potentially stealing sensitive information or performing actions on behalf of users.",
-                recommendation: "Implement proper input validation and output encoding. Use Content Security Policy (CSP) headers to mitigate the impact of XSS vulnerabilities."
+                description: "Your application is vulnerable to cross-site scripting attacks. Attackers could inject malicious scripts that run in users' browsers.",
+                recommendation: "Implement proper input validation and output encoding. Use Content Security Policy (CSP) headers."
             },
             {
                 id: "sql",
                 title: "SQL Injection Risk",
                 severity: "critical",
-                description: "Your application is vulnerable to SQL injection attacks. Attackers could manipulate database queries to access, modify, or delete sensitive information.",
-                recommendation: "Use parameterized queries or prepared statements. Validate and sanitize all user inputs before processing database queries."
+                description: "Your application is vulnerable to SQL injection attacks. Attackers could manipulate database queries to access sensitive information.",
+                recommendation: "Use parameterized queries or prepared statements. Validate and sanitize all user inputs."
             },
             {
                 id: "csrf",
-                title: "Cross-Site Request Forgery (CSRF) Vulnerability",
+                title: "CSRF Vulnerability",
                 severity: "high",
-                description: "Your application doesn't properly validate the origin of requests, making it vulnerable to CSRF attacks. Attackers could trick authenticated users into performing unwanted actions.",
-                recommendation: "Implement anti-CSRF tokens in your forms and API requests. Use SameSite cookies and verify the Origin header for sensitive requests."
+                description: "Your application doesn't properly validate request origins, making it vulnerable to CSRF attacks.",
+                recommendation: "Implement anti-CSRF tokens in your forms and API requests. Use SameSite cookies."
             },
             {
                 id: "auth",
-                title: "Authentication Bypass Vulnerability",
+                title: "Authentication Bypass",
                 severity: "high",
-                description: "We identified potential authentication bypass vulnerabilities. Attackers could gain unauthorized access to restricted areas of your application.",
-                recommendation: "Implement proper session management with secure, HTTP-only cookies. Ensure all protected endpoints validate user authentication and permissions."
+                description: "Potential authentication bypass vulnerabilities detected. Attackers could gain unauthorized access.",
+                recommendation: "Implement proper session management with secure cookies. Validate user authentication."
             },
             {
                 id: "ddos",
                 title: "DDoS Vulnerability",
                 severity: "medium",
-                description: "Your application may be vulnerable to Distributed Denial of Service (DDoS) attacks. We detected limited rate limiting and no protection against volumetric attacks.",
-                recommendation: "Implement rate limiting, request throttling, and use a Web Application Firewall (WAF) to protect against DDoS attacks."
+                description: "Limited protection against Distributed Denial of Service (DDoS) attacks detected.",
+                recommendation: "Implement rate limiting and use a Web Application Firewall (WAF)."
             },
             {
                 id: "config",
                 title: "Security Misconfiguration",
                 severity: "medium",
-                description: "Your application has security misconfigurations that could expose sensitive information or provide attackers with additional attack surface.",
-                recommendation: "Ensure all unnecessary features are disabled. Remove default accounts and passwords. Configure proper security headers and disable directory listings."
-            },
-            {
-                id: "headers",
-                title: "Insecure HTTP Headers",
-                severity: "low",
-                description: "Your application is missing important security headers that could help mitigate various types of attacks.",
-                recommendation: "Implement security headers such as Content Security Policy (CSP), X-Content-Type-Options, X-Frame-Options, and Strict-Transport-Security."
-            },
-            {
-                id: "cors",
-                title: "Improper CORS Configuration",
-                severity: "low",
-                description: "Your Cross-Origin Resource Sharing (CORS) policy is too permissive, potentially allowing malicious websites to access your API endpoints.",
-                recommendation: "Configure CORS to only allow trusted domains. Avoid using wildcard (*) for sensitive endpoints."
+                description: "Security misconfigurations could expose sensitive information.",
+                recommendation: "Disable unnecessary features. Remove default accounts. Configure security headers."
             }
         ];
         
@@ -1084,60 +951,8 @@
         const mediumCount = document.getElementById('medium-count');
         const lowCount = document.getElementById('low-count');
         const reportStatus = document.getElementById('report-status');
-        const securityTips = document.getElementById('security-tips');
         const attackButtons = document.querySelectorAll('.attack-btn');
         const heatmapGrid = document.getElementById('heatmap-grid');
-        const vizCanvas = document.querySelector('.viz-canvas');
-        
-        // Run security test
-        testBtn.addEventListener('click', runSecurityTest);
-        
-        // Initialize ATIE visualization
-        function initATIEVisualization() {
-            const nodes = [
-                { id: 'node-center', x: 0, y: 0 },
-                { id: 'node-1', x: -100, y: -100 },
-                { id: 'node-2', x: 100, y: -100 },
-                { id: 'node-3', x: -100, y: 100 },
-                { id: 'node-4', x: 100, y: 100 }
-            ];
-            
-            // Create connections
-            for (let i = 1; i <= 4; i++) {
-                const conn = document.createElement('div');
-                conn.className = 'connection';
-                conn.id = `conn${i}`;
-                vizCanvas.appendChild(conn);
-            }
-            
-            // Position connections
-            updateConnections();
-        }
-        
-        // Update ATIE connections
-        function updateConnections() {
-            const center = { x: 150, y: 150 };
-            const node1 = { x: 50, y: 50 };
-            const node2 = { x: 250, y: 50 };
-            const node3 = { x: 50, y: 250 };
-            const node4 = { x: 250, y: 250 };
-            
-            updateConnection('conn1', center, node1);
-            updateConnection('conn2', center, node2);
-            updateConnection('conn3', center, node3);
-            updateConnection('conn4', center, node4);
-        }
-        
-        function updateConnection(id, from, to) {
-            const conn = document.getElementById(id);
-            const length = Math.sqrt(Math.pow(to.x - from.x, 2) + Math.pow(to.y - from.y, 2));
-            const angle = Math.atan2(to.y - from.y, to.x - from.x) * 180 / Math.PI;
-            
-            conn.style.width = `${length}px`;
-            conn.style.top = `${from.y}px`;
-            conn.style.left = `${from.x}px`;
-            conn.style.transform = `rotate(${angle}deg)`;
-        }
         
         // Initialize heatmap
         function initHeatmap() {
@@ -1213,7 +1028,7 @@
             testBtn.innerHTML = '<i class="fas fa-bolt"></i> Run Security Test';
             
             // Generate random results
-            const foundVulnerabilities = shuffleArray(vulnerabilities).slice(0, Math.floor(Math.random() * 4) + 3);
+            const foundVulnerabilities = shuffleArray(vulnerabilities).slice(0, Math.floor(Math.random() * 3) + 2);
             
             // Count vulnerabilities
             let critical = 0;
@@ -1282,25 +1097,6 @@
             securityScoreBar.style.width = `${securityScore}%`;
             securityScoreValue.textContent = `${securityScore}%`;
             
-            // Update security tips
-            securityTips.innerHTML = '';
-            
-            if (critical > 0) {
-                securityTips.innerHTML += '<li>Address critical vulnerabilities immediately to prevent data breaches</li>';
-            }
-            if (high > 0) {
-                securityTips.innerHTML += '<li>Prioritize high severity issues that could compromise user data</li>';
-            }
-            if (medium > 0) {
-                securityTips.innerHTML += '<li>Address medium severity issues in your next development cycle</li>';
-            }
-            if (low > 0) {
-                securityTips.innerHTML += '<li>Review low severity issues for potential improvements</li>';
-            }
-            
-            securityTips.innerHTML += '<li>Implement regular security testing as part of your development lifecycle</li>';
-            securityTips.innerHTML += '<li>Consider using a Web Application Firewall (WAF) for added protection</li>';
-            
             // Update heatmap with actual vulnerabilities
             const severityLevels = Array.from({length: 48}, () => {
                 const rand = Math.random();
@@ -1324,20 +1120,14 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current year in footer
-            document.querySelector('footer p').innerHTML = `&copy; ${new Date().getFullYear()} CyberForge Inc. All rights reserved.`;
-            
             // Set default URL
             appUrlInput.value = "https://";
             
-            // Initialize visualizations
-            initATIEVisualization();
+            // Initialize heatmap
             initHeatmap();
             
-            // Create animation loop for ATIE
-            setInterval(() => {
-                updateConnections();
-            }, 100);
+            // Add event listener to test button
+            testBtn.addEventListener('click', runSecurityTest);
         });
     </script>
 </body>
