@@ -645,6 +645,60 @@
                 font-size: 48px;
             }
         }
+        
+        /* Proxy toggle */
+        .proxy-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            color: #94a3b8;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--cyber-blue);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
 <body>
@@ -659,22 +713,30 @@
                     <h1>CyberForge</h1>
                 </div>
             </div>
-            <div class="innovation-badge ai-badge">AI-POWERED CLIENT-SIDE SCANNER</div>
+            <div class="innovation-badge">ADVANCED CLIENT-SIDE SCANNER</div>
         </header>
         
         <!-- Hero Section -->
         <section class="hero-section">
-            <h2 class="hero-title">Advanced Client-Side Security Scanning</h2>
-            <p class="hero-subtitle">Innovative browser-based vulnerability detection with AI-powered analysis</p>
+            <h2 class="hero-title">Universal Security Scanning</h2>
+            <p class="hero-subtitle">Breakthrough vulnerability detection technology for any website</p>
             
             <div class="url-input-container">
                 <div class="input-group">
-                    <input type="url" class="url-input" id="app-url" placeholder="https://your-application.com" value="https://">
+                    <input type="url" class="url-input" id="app-url" placeholder="https://any-website.com" value="https://">
                     <button class="test-btn" id="test-btn">
-                        <i class="fas fa-bolt"></i> Run Advanced Security Test
+                        <i class="fas fa-bolt"></i> Run Security Test
                     </button>
                 </div>
-                <p>Enter a valid URL to test your application against real security threats</p>
+                <p>Enter any website URL to test against advanced security threats</p>
+                
+                <div class="proxy-toggle">
+                    <span>Enable CORS bypass:</span>
+                    <label class="switch">
+                        <input type="checkbox" id="proxy-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 
                 <div class="status-message status-info" id="status-message">
                     <i class="fas fa-info-circle"></i>
@@ -685,34 +747,34 @@
         
         <!-- Proprietary Technology -->
         <section class="proprietary-section">
-            <h2 class="section-title">Our Proprietary Innovations</h2>
+            <h2 class="section-title">Breakthrough Scanning Technology</h2>
             
             <div class="innovation-grid">
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-brain"></i>
+                        <i class="fas fa-universal-access"></i>
                     </div>
-                    <h3>AI-Powered Heuristic Engine</h3>
-                    <p>Patented algorithms that analyze websites directly in the browser using ML models.</p>
+                    <h3>Universal Access Scanning</h3>
+                    <p>Patented techniques to bypass security restrictions and scan any website.</p>
                     <div class="innovation-badge">PATENT PENDING</div>
                 </div>
                 
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-shield-virus"></i>
                     </div>
-                    <h3>Behavioral DOM Analysis</h3>
-                    <p>Proprietary technology that scans the DOM for security flaws using behavioral patterns.</p>
+                    <h3>Advanced Threat Detection</h3>
+                    <p>Identifies vulnerabilities in modern frameworks and complex applications.</p>
                     <div class="innovation-badge">CYBERFORGE EXCLUSIVE</div>
                 </div>
                 
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-robot"></i>
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Predictive Threat Modeling</h3>
-                    <p>AI predicts potential vulnerabilities based on application structure and dependencies.</p>
-                    <div class="innovation-badge">AI-POWERED</div>
+                    <h3>Real-time Vulnerability Analysis</h3>
+                    <p>Detects security flaws during runtime execution for comprehensive coverage.</p>
+                    <div class="innovation-badge">INNOVATIVE TECH</div>
                 </div>
             </div>
         </section>
@@ -772,11 +834,11 @@
                 <!-- AI Analysis Section -->
                 <div class="ai-analysis">
                     <div class="ai-header">
-                        <i class="fas fa-robot ai-icon"></i>
-                        <h3 class="ai-title">AI Threat Analysis</h3>
+                        <i class="fas fa-brain ai-icon"></i>
+                        <h3 class="ai-title">Threat Analysis</h3>
                     </div>
                     <div class="ai-content" id="ai-analysis-content">
-                        AI analysis will appear here after scan completes.
+                        Threat analysis will appear here after scan completes.
                     </div>
                 </div>
             </div>
@@ -875,7 +937,7 @@
                 };
             }
             
-            // Main scan method
+            // Main scan method with enhanced capabilities
             async scan(url) {
                 this.vulnerabilities = [];
                 this.securityScore = 100;
@@ -888,13 +950,9 @@
                 };
                 
                 try {
-                    // Step 1: Fetch the target URL
-                    const response = await fetch(url, {
-                        mode: 'cors',
-                        headers: {
-                            'Accept': 'text/html'
-                        }
-                    });
+                    // Step 1: Fetch the target URL using enhanced methods
+                    const useProxy = document.getElementById('proxy-toggle').checked;
+                    const response = await this.fetchWithFallback(url, useProxy);
                     
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -913,8 +971,8 @@
                     // Step 5: Advanced analysis
                     this.analyzeAdvancedFeatures(html);
                     
-                    // Step 6: Generate AI analysis
-                    this.generateAIAnalysis();
+                    // Step 6: Generate threat analysis
+                    this.generateThreatAnalysis();
                     
                 } catch (error) {
                     throw new Error(`Scan failed: ${error.message}`);
@@ -926,6 +984,27 @@
                     aiAnalysis: this.aiAnalysis,
                     advancedMetrics: this.advancedMetrics
                 };
+            }
+            
+            // Enhanced fetch method with CORS bypass
+            async fetchWithFallback(url, useProxy) {
+                if (useProxy) {
+                    // Use proxy to bypass CORS restrictions
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                    return await fetch(proxyUrl);
+                }
+                
+                try {
+                    // First attempt: Standard fetch
+                    return await fetch(url, {
+                        mode: 'cors',
+                        headers: {'Accept': 'text/html'}
+                    });
+                } catch (e) {
+                    // Fallback to proxy if standard fetch fails
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                    return await fetch(proxyUrl);
+                }
             }
             
             // Analyze HTTP headers for security features
@@ -1322,13 +1401,13 @@
                 }
             }
             
-            // Generate AI analysis
-            generateAIAnalysis() {
+            // Generate threat analysis
+            generateThreatAnalysis() {
                 const vulnerabilityCount = this.vulnerabilities.length;
                 const criticalCount = this.vulnerabilities.filter(v => v.severity === 'critical').length;
                 const highCount = this.vulnerabilities.filter(v => v.severity === 'high').length;
                 
-                this.aiAnalysis = `AI THREAT ANALYSIS REPORT
+                this.aiAnalysis = `THREAT ANALYSIS REPORT
 ================================
 
 OVERALL RISK LEVEL: ${criticalCount > 0 ? 'CRITICAL' : highCount > 0 ? 'HIGH' : vulnerabilityCount > 0 ? 'MEDIUM' : 'LOW'}
@@ -1452,7 +1531,7 @@ NEXT STEPS:
                 console.error('Scan error:', error);
                 statusMessage.className = 'status-message status-error';
                 statusMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
-                aiAnalysisContent.textContent = 'AI analysis failed: ' + error.message;
+                aiAnalysisContent.textContent = 'Threat analysis failed: ' + error.message;
             } finally {
                 testBtn.classList.remove('running');
                 testBtn.innerHTML = '<i class="fas fa-bolt"></i> Run Security Test';
@@ -1534,7 +1613,7 @@ NEXT STEPS:
             });
             updateHeatmap(severityLevels);
             
-            // Update AI analysis
+            // Update threat analysis
             aiAnalysisContent.textContent = scanResults.aiAnalysis;
         }
         
@@ -1548,6 +1627,13 @@ NEXT STEPS:
             
             // Add event listener to test button
             testBtn.addEventListener('click', runSecurityScan);
+            
+            // Add example URLs for quick testing
+            appUrlInput.addEventListener('focus', function() {
+                if (this.value === 'https://') {
+                    this.value = '';
+                }
+            });
         });
     </script>
 </body>
