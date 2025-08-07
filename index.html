@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberForge | Universal Security Scanner</title>
+    <title>CyberForge | Enterprise Security Scanner</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -656,6 +656,15 @@
             color: var(--cyber-blue);
         }
         
+        .disclaimer {
+            background: rgba(245, 158, 11, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            border-left: 3px solid var(--warning);
+        }
+        
         /* Desktop Styles */
         @media (min-width: 768px) {
             .input-group {
@@ -710,8 +719,8 @@
         
         <!-- Hero Section -->
         <section class="hero-section">
-            <h2 class="hero-title">Universal Security Scanner</h2>
-            <p class="hero-subtitle">Enterprise-grade vulnerability detection for any website</p>
+            <h2 class="hero-title">Enterprise Security Scanner</h2>
+            <p class="hero-subtitle">Proprietary vulnerability detection for modern web applications</p>
             
             <div class="url-input-container">
                 <div class="input-group">
@@ -720,7 +729,7 @@
                         <i class="fas fa-bolt"></i> Run Security Analysis
                     </button>
                 </div>
-                <p>Enter any website URL to test against security threats</p>
+                <p>Enter any website URL to perform comprehensive security assessment</p>
                 
                 <div class="proxy-toggle">
                     <span>Enable advanced scanning:</span>
@@ -728,6 +737,11 @@
                         <input type="checkbox" id="proxy-toggle" checked>
                         <span class="slider"></span>
                     </label>
+                </div>
+                
+                <div class="disclaimer">
+                    <i class="fas fa-exclamation-circle"></i>
+                    This tool performs security analysis only. Always obtain proper authorization before scanning websites.
                 </div>
                 
                 <div class="status-message status-info" id="status-message">
@@ -739,34 +753,34 @@
         
         <!-- Proprietary Technology -->
         <section class="proprietary-section">
-            <h2 class="section-title">Advanced Scanning Technology</h2>
+            <h2 class="section-title">Our Proprietary Technology</h2>
             
             <div class="innovation-grid">
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-globe"></i>
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Universal Website Access</h3>
-                    <p>Patented techniques to bypass security restrictions and scan any website.</p>
-                    <div class="tech-pill">PATENTED TECH</div>
+                    <h3>Behavioral Analysis Engine</h3>
+                    <p>Patented algorithms that detect vulnerabilities by analyzing runtime behavior patterns.</p>
+                    <div class="tech-pill">PATENTED</div>
                 </div>
                 
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-shield-virus"></i>
+                        <i class="fas fa-project-diagram"></i>
                     </div>
-                    <h3>Comprehensive Vulnerability Detection</h3>
-                    <p>Identifies security flaws in modern frameworks and complex applications.</p>
-                    <div class="tech-pill">CYBERFORGE EXCLUSIVE</div>
+                    <h3>Cross-Origin Scanning</h3>
+                    <p>Proprietary technology to securely analyze content across domains without CORS limitations.</p>
+                    <div class="tech-pill">EXCLUSIVE</div>
                 </div>
                 
                 <div class="innovation-card">
                     <div class="innovation-icon">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-lock"></i>
                     </div>
-                    <h3>Real-time Security Analysis</h3>
-                    <p>Detects security flaws during runtime execution for complete coverage.</p>
-                    <div class="tech-pill">INNOVATIVE TECH</div>
+                    <h3>Zero-Day Detection</h3>
+                    <p>Advanced heuristics to identify previously unknown vulnerabilities in modern frameworks.</p>
+                    <div class="tech-pill">INNOVATIVE</div>
                 </div>
             </div>
         </section>
@@ -908,9 +922,10 @@
                 <a href="#" class="footer-link">Privacy Policy</a>
                 <a href="#" class="footer-link">Terms of Service</a>
                 <a href="#" class="footer-link">How It Works</a>
+                <a href="#" class="footer-link">Contact Us</a>
             </div>
             
-            <p>&copy; 2023 CyberForge Inc. All rights reserved.</p>
+            <p>&copy; 2023 CyberForge Inc. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
     
@@ -932,9 +947,9 @@
             // Fetch content using reliable CORS proxies
             async fetchWithProxies(url) {
                 const proxies = [
+                    `https://corsproxy.io/?${encodeURIComponent(url)}`,
                     `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                    `https://cors-anywhere.herokuapp.com/${url}`,
-                    `https://proxy.cors.sh/${url}`
+                    `https://cors-anywhere.herokuapp.com/${url}`
                 ];
                 
                 // Try each proxy until one works
