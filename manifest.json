@@ -1,0 +1,25 @@
+{
+  "name": "cyberforge",
+  "short_name": "cyberforge",
+  "description": "Enterprise Security Scanner",
+  "start_url": "https://vincenek.github.io/cyberforge-/#",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/NjZD50wN/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.postimg.cc/ydHTyrxc/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
+
+
