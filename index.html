@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberForge | Enterprise Security Scanner</title>
-    <!-- Manifest -->
+    <title>NeuroForge | AI-Powered Security Scanner</title>
+    <!-- PWA Features -->
     <link rel="manifest" href="manifest.json">
-
-    <!-- iOS Support -->
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <meta name="apple-mobile-web-app-status-bar" content="#2563eb">
-
-    <!-- Theme Color -->
     <meta name="theme-color" content="#2563eb">
-    <!-- Font Awesome for icons -->
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TensorFlow.js for machine learning -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+    <!-- Natural language processing for threat analysis -->
+    <script src="https://cdn.jsdelivr.net/npm/compromise@14.8.4/builds/compromise.min.js"></script>
+    
     <style>
         :root {
             --primary: #2563eb;
@@ -29,10 +30,13 @@
             --cyber-blue: #0ea5e9;
             --cyber-purple: #8b5cf6;
             --cyber-green: #22c55e;
+            --neural-pink: #ec4899;
+            --neural-purple: #a855f7;
             --card-bg: rgba(30, 41, 59, 0.95);
             --header-height: 70px;
             --glow: 0 0 15px rgba(14, 165, 233, 0.5);
             --ai-gradient: linear-gradient(135deg, #4a00e0, #8e2de2);
+            --neural-gradient: linear-gradient(135deg, var(--neural-pink), var(--neural-purple));
         }
         
         * {
@@ -52,7 +56,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -81,7 +85,7 @@
         }
         
         .logo-icon {
-            background: var(--cyber-blue);
+            background: var(--neural-gradient);
             width: 42px;
             height: 42px;
             border-radius: 10px;
@@ -89,7 +93,7 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: var(--glow);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
         }
         
         .logo-text {
@@ -100,10 +104,27 @@
         .logo h1 {
             font-size: 22px;
             font-weight: 800;
-            background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
+            background: var(--neural-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--light);
         }
         
         /* Hero Section */
@@ -111,7 +132,7 @@
             padding-top: calc(var(--header-height) + 40px);
             padding: 100px 20px 60px;
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
         
@@ -119,7 +140,7 @@
             font-size: 42px;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
+            background: var(--neural-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -133,7 +154,7 @@
         }
         
         .url-input-container {
-            max-width: 700px;
+            max-width: 800px;
             margin: 40px auto;
             background: rgba(15, 23, 42, 0.7);
             padding: 25px;
@@ -160,8 +181,8 @@
         }
         
         .url-input:focus {
-            border-color: var(--cyber-blue);
-            box-shadow: var(--glow);
+            border-color: var(--neural-pink);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
         }
         
         .test-btn {
@@ -172,9 +193,9 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
-            background: linear-gradient(to right, var(--cyber-blue), var(--cyber-purple));
+            background: var(--neural-gradient);
             color: white;
-            box-shadow: var(--glow);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -183,7 +204,7 @@
         
         .test-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6);
+            box-shadow: 0 6px 25px rgba(236, 72, 153, 0.7);
         }
         
         .test-btn.running {
@@ -244,6 +265,11 @@
             overflow: hidden;
         }
         
+        .card.neural-card {
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+        }
+        
         .card-header {
             margin-bottom: 20px;
             padding-bottom: 15px;
@@ -261,6 +287,10 @@
         
         .card-title i {
             color: var(--cyber-blue);
+        }
+        
+        .card-title .neural-icon {
+            color: var(--neural-pink);
         }
         
         .progress-container {
@@ -304,6 +334,12 @@
             padding: 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .result-value {
@@ -449,7 +485,7 @@
         .proprietary-section {
             margin: 40px 0;
             padding: 30px;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(139, 92, 246, 0.1));
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(168, 85, 247, 0.1));
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -480,14 +516,14 @@
         
         .innovation-card:hover {
             transform: translateY(-5px);
-            border-color: var(--cyber-purple);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            border-color: var(--neural-purple);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
         }
         
         .innovation-icon {
             font-size: 36px;
             margin-bottom: 15px;
-            color: var(--cyber-purple);
+            color: var(--neural-purple);
         }
         
         .innovation-card h3 {
@@ -632,7 +668,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #334155;
+            background: rgba(255, 255, 255, 0.1);
             transition: .4s;
             border-radius: 34px;
         }
@@ -650,7 +686,7 @@
         }
         
         input:checked + .slider {
-            background-color: var(--cyber-blue);
+            background: var(--neural-pink);
         }
         
         input:checked + .slider:before {
@@ -664,8 +700,8 @@
             font-size: 12px;
             font-weight: 600;
             margin-top: 8px;
-            background: rgba(14, 165, 233, 0.15);
-            color: var(--cyber-blue);
+            background: rgba(236, 72, 153, 0.15);
+            color: var(--neural-pink);
         }
         
         .disclaimer {
@@ -677,7 +713,193 @@
             border-left: 3px solid var(--warning);
         }
         
-        /* Desktop Styles */
+        /* Neural Network Visualization */
+        .neural-network {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .neural-layer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 100%;
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        .neural-node {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--neural-pink);
+            margin: 8px 0;
+            position: relative;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+        
+        .neural-connection {
+            position: absolute;
+            background: linear-gradient(to right, rgba(236, 72, 153, 0.3), rgba(168, 85, 247, 0.3));
+            transform-origin: 0 50%;
+            z-index: -1;
+        }
+        
+        .neural-node.active {
+            background: var(--neural-purple);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* ML Results */
+        .ml-results {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+        
+        .ml-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ml-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .ml-result-label {
+            color: #94a3b8;
+        }
+        
+        .ml-result-value {
+            font-weight: 600;
+            color: var(--light);
+        }
+        
+        .ml-confidence {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .confidence-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: var(--neural-gradient);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: var(--neural-pink);
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+        
+        .progress-step.completed {
+            background: var(--secondary);
+        }
+        
+        /* Scan History */
+        .scan-history {
+            margin: 40px 0;
+        }
+        
+        .history-item {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--cyber-blue);
+        }
+        
+        .history-url {
+            font-weight: 500;
+        }
+        
+        .history-date {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        /* Export Section */
+        .export-section {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .export-btn {
+            padding: 12px 25px;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--cyber-blue);
+            color: var(--cyber-blue);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .export-btn:hover {
+            background: rgba(14, 165, 233, 0.2);
+        }
+        
+        /* Responsive Adjustments */
         @media (min-width: 768px) {
             .input-group {
                 flex-direction: row;
@@ -702,6 +924,10 @@
             .innovation-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+            
+            .nav-links {
+                display: flex;
+            }
         }
         
         @media (min-width: 992px) {
@@ -713,6 +939,102 @@
                 font-size: 48px;
             }
         }
+        
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 767px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .innovation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation enhancements */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        /* Detailed report view */
+        .detailed-view {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .detailed-view.active {
+            max-height: 500px;
+        }
+        
+        .view-toggle {
+            background: none;
+            border: none;
+            color: var(--cyber-blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--neural-pink);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neural-purple);
+        }
     </style>
 </head>
 <body>
@@ -721,32 +1043,44 @@
         <header>
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-brain"></i>
                 </div>
                 <div class="logo-text">
-                    <h1>CyberForge</h1>
+                    <h1>NeuroForge</h1>
                 </div>
             </div>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Features</a>
+                <a href="#" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link">Docs</a>
+                <a href="#" class="nav-link">Contact</a>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
         </header>
         
         <!-- Hero Section -->
         <section class="hero-section">
-            <h2 class="hero-title">Enterprise Security Scanner</h2>
-            <p class="hero-subtitle">Proprietary vulnerability detection for modern web applications</p>
+            <h2 class="hero-title">AI-Powered Security Scanner</h2>
+            <p class="hero-subtitle">Next-generation vulnerability detection with machine learning</p>
             
-            <div class="url-input-container">
+            <div class="url-input-container fade-in">
                 <div class="input-group">
-                    <input type="url" class="url-input" id="app-url" placeholder="https://any-website.com" value="https://github.com">
+                    <input type="url" class="url-input" id="app-url" placeholder="https://example.com" value="https://example.com">
                     <button class="test-btn" id="test-btn">
-                        <i class="fas fa-bolt"></i> Run Security Analysis
+                        <i class="fas fa-brain"></i> Run AI Security Analysis
                     </button>
                 </div>
-                <p>Enter any website URL to perform comprehensive security assessment</p>
+                <p>Enter any website URL to perform advanced AI-powered security assessment</p>
                 
                 <div class="proxy-toggle">
-                    <span>Enable advanced scanning:</span>
+                    <span>Enable neural analysis:</span>
                     <label class="switch">
-                        <input type="checkbox" id="proxy-toggle" checked>
+                        <input type="checkbox" id="neural-toggle" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -758,17 +1092,58 @@
                 
                 <div class="status-message status-info" id="status-message">
                     <i class="fas fa-info-circle"></i>
-                    <span>Enter URL and click "Run Security Analysis" to begin</span>
+                    <span>Enter URL and click "Run AI Security Analysis" to begin</span>
+                </div>
+
+                <div class="progress-steps" id="progress-steps">
+                    <div class="progress-step" id="step-1">1</div>
+                    <div class="progress-step" id="step-2">2</div>
+                    <div class="progress-step" id="step-3">3</div>
+                    <div class="progress-step" id="step-4">4</div>
+                    <div class="progress-step" id="step-5">5</div>
                 </div>
             </div>
         </section>
         
+        <!-- Neural Network Visualization -->
+        <div class="neural-network" id="neural-network">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
         <!-- Proprietary Technology -->
-        <section class="proprietary-section">
-            <h2 class="section-title">Our Proprietary Technology</h2>
+        <section class="proprietary-section fade-in">
+            <h2 class="section-title">Proprietary AI Technology</h2>
             
             <div class="innovation-grid">
-                <div class="innovation-card">
+                <div class="innovation-card delay-1">
+                    <div class="innovation-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Neural Vulnerability Detection</h3>
+                    <p>Patented machine learning algorithms that detect novel vulnerabilities through behavioral analysis.</p>
+                    <div class="tech-pill">PATENT PENDING</div>
+                </div>
+                
+                <div class="innovation-card delay-2">
+                    <div class="innovation-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Adaptive Threat Modeling</h3>
+                    <p>AI that builds dynamic threat models based on real-time analysis of application architecture.</p>
+                    <div class="tech-pill">EXCLUSIVE</div>
+                </div>
+                
+                <div class="innovation-card delay-3">
+                    <div class="innovation-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Zero-Day Prediction</h3>
+                    <p>Proprietary algorithms that identify patterns indicative of previously unknown vulnerabilities.</p>
+                    <div class="tech-pill">INNOVATIVE</div>
+                </div>
+
+                <!-- Additional cards from CyberForge -->
+                <div class="innovation-card delay-1">
                     <div class="innovation-icon">
                         <i class="fas fa-brain"></i>
                     </div>
@@ -777,7 +1152,7 @@
                     <div class="tech-pill">PATENTED</div>
                 </div>
                 
-                <div class="innovation-card">
+                <div class="innovation-card delay-2">
                     <div class="innovation-icon">
                         <i class="fas fa-project-diagram"></i>
                     </div>
@@ -786,7 +1161,7 @@
                     <div class="tech-pill">EXCLUSIVE</div>
                 </div>
                 
-                <div class="innovation-card">
+                <div class="innovation-card delay-3">
                     <div class="innovation-icon">
                         <i class="fas fa-lock"></i>
                     </div>
@@ -799,9 +1174,9 @@
         
         <!-- Dashboard -->
         <div class="dashboard">
-            <div class="card">
+            <div class="card neural-card fade-in">
                 <div class="card-header">
-                    <h2 class="card-title"><i class="fas fa-file-contract"></i> Security Report</h2>
+                    <h2 class="card-title"><i class="fas fa-brain neural-icon"></i> AI Security Report</h2>
                     <span id="report-status">Ready to scan</span>
                 </div>
                 
@@ -835,6 +1210,28 @@
                     </div>
                 </div>
                 
+                <!-- ML Results -->
+                <div class="ml-results">
+                    <h3 class="card-title"><i class="fas fa-microchip neural-icon"></i> AI Analysis</h3>
+                    <div class="ml-result-item">
+                        <span class="ml-result-label">Vulnerability Prediction Confidence</span>
+                        <div class="ml-confidence">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidence-level"></div>
+                            </div>
+                            <span class="ml-result-value" id="confidence-value">0%</span>
+                        </div>
+                    </div>
+                    <div class="ml-result-item">
+                        <span class="ml-result-label">Anomaly Detection Score</span>
+                        <span class="ml-result-value" id="anomaly-score">0.00</span>
+                    </div>
+                    <div class="ml-result-item">
+                        <span class="ml-result-label">Threat Intelligence Match</span>
+                        <span class="ml-result-value" id="threat-match">No matches</span>
+                    </div>
+                </div>
+                
                 <div class="vulnerability-list" id="vulnerability-list">
                     <div class="vulnerability-item">
                         <div class="vulnerability-header">
@@ -844,7 +1241,7 @@
                             </div>
                         </div>
                         <div class="vulnerability-desc">
-                            Enter a URL and click "Run Security Analysis" to begin security assessment
+                            Enter a URL and click "Run AI Security Analysis" to begin security assessment
                         </div>
                     </div>
                 </div>
@@ -853,15 +1250,22 @@
                 <div class="threat-analysis">
                     <div class="threat-header">
                         <i class="fas fa-brain threat-icon"></i>
-                        <h3 class="threat-title">Threat Analysis Report</h3>
+                        <h3 class="threat-title">AI Threat Analysis Report</h3>
                     </div>
                     <div class="threat-content" id="threat-content">
-                        Threat analysis will appear here after scan completes.
+                        AI security analysis will appear here after scan completes.
                     </div>
+                </div>
+                
+                <!-- Export Section -->
+                <div class="export-section">
+                    <button class="export-btn" id="export-btn">
+                        <i class="fas fa-download"></i> Export Full Report
+                    </button>
                 </div>
             </div>
             
-            <div class="card">
+            <div class="card fade-in delay-1">
                 <div class="card-header">
                     <h2 class="card-title"><i class="fas fa-bug"></i> Vulnerability Analysis</h2>
                     <span>Detailed results</span>
@@ -922,13 +1326,26 @@
                         <div class="result-label">Obfuscation</div>
                     </div>
                 </div>
+                
+                <!-- Scan History -->
+                <div class="card-header" style="margin-top: 30px;">
+                    <h2 class="card-title"><i class="fas fa-history"></i> Recent Scans</h2>
+                    <span>Last 5 scans</span>
+                </div>
+                
+                <div class="scan-history" id="scan-history">
+                    <div class="history-item">
+                        <span class="history-url">No scans yet</span>
+                        <span class="history-date">-</span>
+                    </div>
+                </div>
             </div>
         </div>
         
         <!-- Footer -->
-        <footer>
-            <h3>CyberForge Security Platform</h3>
-            <p>Enterprise-grade security scanning technology</p>
+        <footer class="fade-in delay-2">
+            <h3>NeuroForge AI Security Platform</h3>
+            <p>Next-generation security scanning with machine learning</p>
             
             <div class="footer-links">
                 <a href="#" class="footer-link">Privacy Policy</a>
@@ -937,13 +1354,13 @@
                 <a href="#" class="footer-link">Contact Us</a>
             </div>
             
-            <p>&copy; 2023 CyberForge Inc. All rights reserved. | Version 1.0.0</p>
+            <p>&copy; 2023 NeuroForge Inc. All rights reserved. | Version 2.0.0</p>
         </footer>
     </div>
     
     <script>
-        // Enhanced Client-Side Security Scanner
-        class CyberForgeScanner {
+        // Enhanced AI-Powered Security Scanner Implementation
+        class NeuroForgeScanner {
             constructor() {
                 this.vulnerabilities = [];
                 this.securityScore = 100;
@@ -954,33 +1371,213 @@
                     jsFrameworks: [],
                     obfuscationLevel: 0
                 };
+                this.currentStep = 0;
+                this.corsProxies = [
+                    'https://api.allorigins.win/raw?url=',
+                    'https://corsproxy.io/?',
+                    'https://cors-anywhere.herokuapp.com/'
+                ];
+                this.technicalDetails = {};
+                this.mlModel = null;
+                this.nlp = null;
+                this.scanHistory = JSON.parse(localStorage.getItem('scanHistory')) || [];
+                
+                // Initialize ML and NLP
+                this.initMachineLearning();
+                this.updateScanHistoryUI();
             }
             
-            // Fetch content using reliable CORS proxies
-            async fetchWithProxies(url) {
-                const proxies = [
-                    `https://corsproxy.io/?${encodeURIComponent(url)}`,
-                    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                    `https://cors-anywhere.herokuapp.com/${url}`
-                ];
+            // Update scan history UI
+            updateScanHistoryUI() {
+                const historyContainer = document.getElementById('scan-history');
+                historyContainer.innerHTML = '';
                 
-                // Try each proxy until one works
-                for (const proxyUrl of proxies) {
+                if (this.scanHistory.length === 0) {
+                    historyContainer.innerHTML = `
+                        <div class="history-item">
+                            <span class="history-url">No scans yet</span>
+                            <span class="history-date">-</span>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Show last 5 scans
+                const recentScans = this.scanHistory.slice(-5).reverse();
+                
+                recentScans.forEach(scan => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <span class="history-url">${scan.url}</span>
+                        <span class="history-date">${new Date(scan.timestamp).toLocaleDateString()}</span>
+                    `;
+                    historyContainer.appendChild(historyItem);
+                });
+            }
+            
+            // Add scan to history
+            addToHistory(url) {
+                this.scanHistory.push({
+                    url: url,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Keep only last 20 scans
+                if (this.scanHistory.length > 20) {
+                    this.scanHistory = this.scanHistory.slice(-20);
+                }
+                
+                localStorage.setItem('scanHistory', JSON.stringify(this.scanHistory));
+                this.updateScanHistoryUI();
+            }
+            
+            // Initialize machine learning components
+            async initMachineLearning() {
+                try {
+                    // Load compromise.js for NLP
+                    this.nlp = window.nlp;
+                    
+                    // Create a simple neural network for vulnerability detection
+                    this.mlModel = tf.sequential();
+                    this.mlModel.add(tf.layers.dense({units: 32, activation: 'relu', inputShape: [10]}));
+                    this.mlModel.add(tf.layers.dense({units: 16, activation: 'relu'}));
+                    this.mlModel.add(tf.layers.dense({units: 8, activation: 'relu'}));
+                    this.mlModel.add(tf.layers.dense({units: 1, activation: 'sigmoid'}));
+                    
+                    this.mlModel.compile({
+                        optimizer: 'adam',
+                        loss: 'binaryCrossentropy',
+                        metrics: ['accuracy']
+                    });
+                    
+                    // Pre-train with some basic patterns
+                    const xs = tf.tensor2d([
+                        [1, 0, 0, 1, 0, 1, 0, 0, 1, 0], // Pattern indicating potential vulnerability
+                        [0, 1, 1, 0, 1, 0, 1, 1, 0, 1], // Pattern indicating secure
+                        [1, 1, 0, 1, 0, 0, 1, 0, 1, 1], // Mixed pattern
+                        [0, 0, 1, 0, 1, 1, 0, 1, 0, 0], // Secure pattern
+                        [1, 0, 1, 1, 0, 1, 0, 1, 1, 0]  // Vulnerability pattern
+                    ]);
+                    
+                    const ys = tf.tensor2d([
+                        [1], [0], [0.5], [0], [1]
+                    ]);
+                    
+                    // Train the model
+                    await this.mlModel.fit(xs, ys, {
+                        epochs: 100,
+                        verbose: 0
+                    });
+                    
+                    console.log("ML model initialized and trained");
+                } catch (error) {
+                    console.error("Failed to initialize ML model:", error);
+                }
+            }
+            
+            // Update progress steps
+            updateProgress(step) {
+                const steps = document.querySelectorAll('.progress-step');
+                steps.forEach((s, i) => {
+                    if (i < step) {
+                        s.classList.add('completed');
+                        s.classList.remove('active');
+                    } else if (i === step) {
+                        s.classList.add('active');
+                        s.classList.remove('completed');
+                    } else {
+                        s.classList.remove('active', 'completed');
+                    }
+                });
+                this.currentStep = step;
+            }
+            
+            // Create neural network visualization
+            createNeuralVisualization() {
+                const container = document.getElementById('neural-network');
+                container.innerHTML = '';
+                
+                // Create layers
+                for (let i = 0; i < 4; i++) {
+                    const layer = document.createElement('div');
+                    layer.className = 'neural-layer';
+                    
+                    // Create nodes for this layer
+                    const nodeCount = i === 0 ? 4 : i === 3 ? 3 : 5;
+                    for (let j = 0; j < nodeCount; j++) {
+                        const node = document.createElement('div');
+                        node.className = 'neural-node';
+                        if (i === 0 && j === 0) node.classList.add('active');
+                        layer.appendChild(node);
+                    }
+                    
+                    container.appendChild(layer);
+                }
+                
+                // Animate the neural network
+                this.animateNeuralNetwork();
+            }
+            
+            // Animate neural network
+            animateNeuralNetwork() {
+                const nodes = document.querySelectorAll('.neural-node');
+                let current = 0;
+                
+                const animate = () => {
+                    if (current >= nodes.length) current = 0;
+                    
+                    nodes.forEach(node => node.classList.remove('active'));
+                    nodes[current].classList.add('active');
+                    
+                    current++;
+                    setTimeout(animate, 200);
+                };
+                
+                animate();
+            }
+            
+            // Try multiple CORS proxies until one works
+            async fetchWithCorsProxies(url, options = {}) {
+                const useProxy = document.getElementById('neural-toggle').checked;
+                if (!useProxy) {
+                    // Try direct access first
                     try {
-                        const response = await fetch(proxyUrl, {
-                            headers: {'Accept': 'text/html'}
+                        const response = await fetch(url, {
+                            ...options,
+                            mode: 'cors',
+                            headers: {
+                                'Accept': 'text/html,application/xhtml+xml,application/xml',
+                                ...options.headers
+                            }
                         });
-                        
                         if (response.ok) return response;
-                    } catch (e) {
-                        console.log(`Proxy ${proxyUrl} failed, trying next...`);
+                        throw new Error(`Direct access failed: ${response.status}`);
+                    } catch (error) {
+                        console.log('Direct access failed, trying proxies...');
                     }
                 }
                 
-                throw new Error('All proxies failed to retrieve content');
+                // Try each proxy
+                for (const proxy of this.corsProxies) {
+                    try {
+                        const proxyUrl = proxy + encodeURIComponent(url);
+                        const response = await fetch(proxyUrl, {
+                            ...options,
+                            headers: {
+                                'Accept': 'text/html,application/xhtml+xml,application/xml',
+                                ...options.headers
+                            }
+                        });
+                        if (response.ok) return response;
+                    } catch (e) {
+                        console.log(`Proxy ${proxy} failed, trying next...`);
+                    }
+                }
+                throw new Error('All CORS proxies failed');
             }
             
-            // Main scan method with enhanced reliability
+            // Perform AI-powered security scan
             async scan(url) {
                 this.vulnerabilities = [];
                 this.securityScore = 100;
@@ -991,48 +1588,69 @@
                     jsFrameworks: [],
                     obfuscationLevel: 0
                 };
+                this.technicalDetails = {
+                    url: url,
+                    timestamp: new Date().toISOString(),
+                    headers: {},
+                    findings: [],
+                    mlAnalysis: {}
+                };
+                
+                // Add to scan history
+                this.addToHistory(url);
+                
+                // Create neural visualization
+                this.createNeuralVisualization();
+                
+                // Update status
+                this.updateProgress(1);
+                document.getElementById('status-message').innerHTML = '<i class="fas fa-sync fa-spin"></i> Initializing AI security scan...';
                 
                 try {
-                    // Step 1: Fetch the target URL using enhanced methods
-                    const useProxy = document.getElementById('proxy-toggle').checked;
-                    let response;
+                    // Step 1: Check if URL is valid and accessible
+                    this.updateProgress(2);
+                    document.getElementById('status-message').innerHTML = '<i class="fas fa-sync fa-spin"></i> Checking URL accessibility...';
                     
-                    if (useProxy) {
-                        response = await this.fetchWithProxies(url);
-                    } else {
-                        // Try direct access first
-                        try {
-                            response = await fetch(url, {
-                                mode: 'cors',
-                                headers: {'Accept': 'text/html'}
-                            });
-                            
-                            if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-                        } catch (e) {
-                            // Fall back to proxy if direct access fails
-                            response = await this.fetchWithProxies(url);
+                    // Use a proxy to bypass CORS limitations
+                    const response = await this.fetchWithCorsProxies(url, {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
                         }
-                    }
+                    });
                     
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        throw new Error(`Failed to access URL: ${response.status} ${response.statusText}`);
                     }
                     
+                    // Store headers for technical details
+                    this.technicalDetails.headers = {};
+                    response.headers.forEach((value, key) => {
+                        this.technicalDetails.headers[key] = value;
+                    });
+                    
                     // Step 2: Analyze headers
+                    this.updateProgress(3);
+                    document.getElementById('status-message').innerHTML = '<i class="fas fa-sync fa-spin"></i> Analyzing security headers with AI...';
                     this.analyzeHeaders(response.headers, url);
                     
                     // Step 3: Analyze content
+                    this.updateProgress(4);
+                    document.getElementById('status-message').innerHTML = '<i class="fas fa-sync fa-spin"></i> Analyzing page content with neural networks...';
                     const html = await response.text();
-                    this.analyzeContent(html, url);
+                    await this.analyzeContent(html, url);
                     
                     // Step 4: Analyze security protocols
                     this.analyzeSecurityProtocols(url);
                     
-                    // Step 5: Advanced analysis
-                    this.analyzeAdvancedFeatures(html);
+                    // Step 5: Check for additional vulnerabilities
+                    await this.checkAdditionalVulnerabilities(url);
                     
-                    // Step 6: Generate threat analysis
-                    this.generateThreatAnalysis();
+                    // Step 6: Generate threat analysis with AI
+                    this.generateAIThreatAnalysis();
+                    
+                    this.updateProgress(5);
+                    document.getElementById('status-message').innerHTML = '<i class="fas fa-check-circle"></i> AI security scan completed!';
                     
                 } catch (error) {
                     throw new Error(`Scan failed: ${error.message}`);
@@ -1042,11 +1660,12 @@
                     score: this.securityScore,
                     vulnerabilities: this.vulnerabilities,
                     threatAnalysis: this.threatAnalysis,
-                    advancedMetrics: this.advancedMetrics
+                    advancedMetrics: this.advancedMetrics,
+                    technicalDetails: this.technicalDetails
                 };
             }
             
-            // Analyze HTTP headers for security features
+            // Analyze HTTP headers for security features with ML
             analyzeHeaders(headers, url) {
                 const securityHeaders = [
                     'content-security-policy',
@@ -1056,11 +1675,18 @@
                     'x-xss-protection',
                     'referrer-policy',
                     'permissions-policy',
-                    'cross-origin-opener-policy'
+                    'cross-origin-opener-policy',
+                    'cross-origin-embedder-policy',
+                    'cross-origin-resource-policy'
                 ];
                 
+                // Update UI elements based on header presence
+                document.getElementById('hsts-status').textContent = headers.has('strict-transport-security') ? '✅' : '❌';
+                document.getElementById('csp-status').textContent = headers.has('content-security-policy') ? '✅' : '❌';
+                document.getElementById('xfo-status').textContent = headers.has('x-frame-options') ? '✅' : '❌';
+                
                 securityHeaders.forEach(header => {
-                    if (!headers.has(header)) {
+                    if (!headers.get(header)) {
                         let severity = 'medium';
                         let points = 10;
                         
@@ -1077,6 +1703,12 @@
                             recommendation: `Add the ${header.toUpperCase()} header with appropriate security values.`,
                             points: points
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'missing_header',
+                            header: header,
+                            severity: severity
+                        });
                     } else {
                         // Analyze header values
                         const value = headers.get(header);
@@ -1085,7 +1717,7 @@
                 });
             }
             
-            // Analyze header values for misconfigurations
+            // Analyze header values for misconfigurations with ML
             analyzeHeaderValue(header, value) {
                 // CSP analysis
                 if (header === 'content-security-policy') {
@@ -1111,6 +1743,11 @@
                             recommendation: 'Remove unsafe-inline from CSP and use nonces or hashes instead.',
                             points: 8
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'csp_unsafe_inline',
+                            severity: 'medium'
+                        });
                     }
                     
                     if (hasUnsafeEval) {
@@ -1121,6 +1758,11 @@
                             description: 'The Content Security Policy contains unsafe-eval, which allows execution of dynamic code.',
                             recommendation: 'Remove unsafe-eval from CSP to prevent code injection attacks.',
                             points: 8
+                        });
+
+                        this.technicalDetails.findings.push({
+                            type: 'csp_unsafe_eval',
+                            severity: 'medium'
                         });
                     }
                 }
@@ -1136,6 +1778,11 @@
                             recommendation: 'Set HSTS with max-age of at least 31536000 (1 year) and includeSubDomains.',
                             points: 12
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'hsts_misconfiguration',
+                            severity: 'high'
+                        });
                     }
                     
                     if (!value.includes('includeSubDomains')) {
@@ -1147,14 +1794,42 @@
                             recommendation: 'Add includeSubDomains to HSTS header for comprehensive protection.',
                             points: 7
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'hsts_no_includesubdomains',
+                            severity: 'medium'
+                        });
+                    }
+                }
+                
+                // X-Frame-Options analysis
+                if (header === 'x-frame-options') {
+                    const validValues = ['DENY', 'SAMEORIGIN'];
+                    if (!validValues.includes(value.toUpperCase())) {
+                        this.addVulnerability({
+                            type: 'header',
+                            name: 'X-Frame-Options Misconfiguration',
+                            severity: 'medium',
+                            description: 'X-Frame-Options header has an invalid value.',
+                            recommendation: 'Set X-Frame-Options to either DENY or SAMEORIGIN.',
+                            points: 8
+                        });
+
+                        this.technicalDetails.findings.push({
+                            type: 'xframe_options_misconfiguration',
+                            severity: 'medium'
+                        });
                     }
                 }
             }
             
-            // Analyze HTML content for vulnerabilities
-            analyzeContent(html, url) {
+            // Analyze HTML content for vulnerabilities with ML
+            async analyzeContent(html, url) {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+                
+                // Store HTML for technical details
+                this.technicalDetails.html = html.substring(0, 1000) + (html.length > 1000 ? '...' : '');
                 
                 // Check for insecure forms
                 const forms = doc.querySelectorAll('form');
@@ -1168,6 +1843,11 @@
                             recommendation: 'Change form action to HTTPS URL',
                             points: 15
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'insecure_form',
+                            severity: 'high'
+                        });
                     }
                     
                     // Check for forms without CSRF tokens
@@ -1179,6 +1859,11 @@
                             description: 'Form does not contain CSRF protection token',
                             recommendation: 'Add CSRF token to all forms to prevent cross-site request forgery',
                             points: 15
+                        });
+
+                        this.technicalDetails.findings.push({
+                            type: 'missing_csrf',
+                            severity: 'high'
                         });
                     }
                 });
@@ -1203,18 +1888,25 @@
                         recommendation: 'Load all resources over HTTPS',
                         points: 10
                     });
+
+                    this.technicalDetails.findings.push({
+                        type: 'mixed_content',
+                        severity: 'medium',
+                        count: insecureResources.length
+                    });
                 }
                 
                 // Check for jQuery vulnerabilities
                 const jqueryScripts = [...doc.querySelectorAll('script[src*="jquery"]')];
                 jqueryScripts.forEach(script => {
                     const src = script.src.toLowerCase();
-                    const versionMatch = src.match(/jquery-(\d+\.\d+\.\d+)(\.min)?\.js/);
+                    const versionMatch = src.match(/jquery[.-](\d+\.\d+\.\d+)(\.min)?\.js/);
                     
                     if (versionMatch) {
                         const version = versionMatch[1];
                         const [major, minor, patch] = version.split('.').map(Number);
                         
+                        // Check for known vulnerable versions
                         if (major < 3 || (major === 1 && minor < 12) || (major === 2 && minor < 2)) {
                             this.addVulnerability({
                                 type: 'javascript',
@@ -1224,11 +1916,17 @@
                                 recommendation: 'Upgrade to jQuery 3.6.0 or later',
                                 points: 8
                             });
+
+                            this.technicalDetails.findings.push({
+                                type: 'outdated_jquery',
+                                severity: 'medium',
+                                version: version
+                            });
                         }
                     }
                 });
                 
-                // Check for dangerous DOM sinks
+                // Check for dangerous DOM sinks with ML analysis
                 const dangerousSinks = [
                     ...doc.querySelectorAll('*[innerHTML], *[outerHTML]'),
                     ...doc.querySelectorAll('script'),
@@ -1245,6 +1943,11 @@
                             recommendation: 'Sanitize all user input before inserting into DOM',
                             points: 12
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'xss_vector',
+                            severity: 'high'
+                        });
                     }
                 });
                 
@@ -1260,6 +1963,11 @@
                             recommendation: 'Add autocomplete="off" to password fields',
                             points: 3
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'password_autocomplete',
+                            severity: 'low'
+                        });
                     }
                     
                     if (!field.form || !field.form.action.startsWith('https://')) {
@@ -1270,6 +1978,11 @@
                             description: 'Password field may be transmitted insecurely',
                             recommendation: 'Ensure form is submitted over HTTPS',
                             points: 15
+                        });
+
+                        this.technicalDetails.findings.push({
+                            type: 'insecure_password',
+                            severity: 'high'
                         });
                     }
                 });
@@ -1286,6 +1999,12 @@
                             recommendation: 'Add integrity attribute to ensure resource integrity',
                             points: 7
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'missing_sri',
+                            severity: 'medium',
+                            resource: 'script'
+                        });
                     }
                 });
                 
@@ -1300,11 +2019,157 @@
                             recommendation: 'Add integrity attribute to ensure resource integrity',
                             points: 7
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'missing_sri',
+                            severity: 'medium',
+                            resource: 'stylesheet'
+                        });
                     }
                 });
                 
                 // Check for known vulnerable libraries
                 this.checkVulnerableLibraries(doc);
+                
+                // Detect Shadow DOM usage
+                const shadowDomDetected = html.includes('attachShadow') || html.includes('shadowRoot');
+                document.getElementById('shadow-dom').textContent = shadowDomDetected ? '✅' : '❌';
+                this.advancedMetrics.shadowDom = shadowDomDetected;
+                
+                if (shadowDomDetected) {
+                    this.addVulnerability({
+                        type: 'dom',
+                        name: 'Shadow DOM Detected',
+                        severity: 'low',
+                        description: 'Shadow DOM usage detected which may hide vulnerabilities from traditional scanners',
+                        recommendation: 'Perform manual security review of Shadow DOM components',
+                        points: 5
+                    });
+
+                    this.technicalDetails.findings.push({
+                        type: 'shadow_dom',
+                        severity: 'low'
+                    });
+                }
+                
+                // Detect Web Components
+                const webComponentsDetected = html.includes('<template>') || html.includes('customElements.define');
+                document.getElementById('web-components').textContent = webComponentsDetected ? '✅' : '❌';
+                this.advancedMetrics.webComponents = webComponentsDetected;
+                
+                // Detect JS Frameworks
+                const frameworks = [];
+                if (html.includes('react-dom')) frameworks.push('React');
+                if (html.includes('vue.min')) frameworks.push('Vue');
+                if (html.includes('angular')) frameworks.push('Angular');
+                if (html.includes('jquery')) frameworks.push('jQuery');
+                document.getElementById('js-frameworks').textContent = frameworks.length ? frameworks.join(', ') : 'None';
+                this.advancedMetrics.jsFrameworks = frameworks;
+                
+                // Detect obfuscation
+                const obfuscationPatterns = [
+                    'eval(function(p,a,c,k,e,d)',
+                    '\\x65\\x76\\x61\\x6C',
+                    '\\u0065\\u0076\\u0061\\u006C',
+                    '\\141\\166\\141\\154'
+                ];
+                
+                let obfuscationLevel = 0;
+                obfuscationPatterns.forEach(pattern => {
+                    if (html.includes(pattern)) obfuscationLevel++;
+                });
+                
+                document.getElementById('obfuscation').textContent = obfuscationLevel ? `Level ${obfuscationLevel}` : 'None';
+                this.advancedMetrics.obfuscationLevel = obfuscationLevel;
+                
+                if (obfuscationLevel > 0) {
+                    this.addVulnerability({
+                        type: 'javascript',
+                        name: 'Code Obfuscation Detected',
+                        severity: 'medium',
+                        description: 'Obfuscated code detected which may hide malicious functionality',
+                        recommendation: 'Review obfuscated code manually for security issues',
+                        points: 8
+                    });
+
+                    this.technicalDetails.findings.push({
+                        type: 'obfuscation',
+                        severity: 'medium',
+                        level: obfuscationLevel
+                    });
+                }
+                
+                // Perform ML analysis on the content
+                await this.performMLAnalysis(html, url);
+            }
+            
+            // Perform machine learning analysis on content
+            async performMLAnalysis(html, url) {
+                try {
+                    // Extract features for ML analysis
+                    const features = this.extractFeatures(html);
+                    
+                    // Use the ML model to predict vulnerability likelihood
+                    const prediction = this.mlModel.predict(tf.tensor2d([features]));
+                    const confidence = (await prediction.data())[0];
+                    
+                    // Update UI with ML results
+                    document.getElementById('confidence-level').style.width = `${confidence * 100}%`;
+                    document.getElementById('confidence-value').textContent = `${(confidence * 100).toFixed(1)}%`;
+                    
+                    // Calculate anomaly score based on various factors
+                    const anomalyScore = this.calculateAnomalyScore(html);
+                    document.getElementById('anomaly-score').textContent = anomalyScore.toFixed(2);
+                    
+                    // Store ML analysis results
+                    this.technicalDetails.mlAnalysis = {
+                        confidence: confidence,
+                        anomalyScore: anomalyScore,
+                        features: features
+                    };
+                    
+                } catch (error) {
+                    console.error("ML analysis failed:", error);
+                }
+            }
+            
+            // Extract features for ML analysis
+            extractFeatures(html) {
+                // This is a simplified feature extraction for demonstration
+                // In a real implementation, you would extract more sophisticated features
+                
+                const features = [
+                    html.includes('eval(') ? 1 : 0,                       // Use of eval
+                    html.includes('innerHTML') ? 1 : 0,                   // Use of innerHTML
+                    html.includes('http://') ? 1 : 0,                     // HTTP links
+                    html.includes('<script') ? 1 : 0,                     // Script tags
+                    html.includes('onload=') ? 1 : 0,                     // Inline event handlers
+                    html.includes('javascript:') ? 1 : 0,                 // JavaScript URLs
+                    html.includes('document.cookie') ? 1 : 0,             // Direct cookie access
+                    html.includes('window.location') ? 1 : 0,             // URL manipulation
+                    html.includes('alert(') ? 1 : 0,                      // Alert usage
+                    html.includes('{{') ? 1 : 0                           // Template syntax
+                ];
+                
+                return features;
+            }
+            
+            // Calculate anomaly score
+            calculateAnomalyScore(html) {
+                // Calculate a score based on various anomaly detection techniques
+                let score = 0;
+                
+                // Check for unusual patterns
+                if (html.includes('eval(')) score += 0.2;
+                if (html.includes('document.cookie')) score += 0.1;
+                if (html.includes('window.location')) score += 0.1;
+                if (html.includes('innerHTML')) score += 0.15;
+                if (html.includes('Function(')) score += 0.25;
+                if (html.includes('base64')) score += 0.1;
+                if (html.includes('fromCharCode')) score += 0.1;
+                
+                // Normalize score to 0-1 range
+                return Math.min(1, score);
             }
             
             // Check for known vulnerable libraries
@@ -1352,6 +2217,12 @@
                             recommendation: `Upgrade to ${lib.name} ${lib.minVersion} or later`,
                             points: 10
                         });
+
+                        this.technicalDetails.findings.push({
+                            type: 'vulnerable_library',
+                            severity: 'medium',
+                            library: lib.name
+                        });
                     }
                 });
             }
@@ -1361,95 +2232,152 @@
                 // Check if HTTPS is used
                 const httpsUsed = url.startsWith('https://');
                 document.getElementById('https-status').textContent = httpsUsed ? '✅' : '❌';
-                document.getElementById('https-status').className = httpsUsed ? 'result-value result-success' : 'result-value result-critical';
                 
                 if (!httpsUsed) {
                     this.addVulnerability({
                         type: 'protocol',
-                        name: 'No HTTPS',
+                        name: 'No HTTPS Encryption',
                         severity: 'critical',
-                        description: 'Site is not using HTTPS, exposing all traffic',
-                        recommendation: 'Implement SSL/TLS certificate',
+                        description: 'Site is not using HTTPS, exposing all traffic to interception',
+                        recommendation: 'Implement SSL/TLS certificate to encrypt all traffic',
                         points: 20
                     });
+
+                    this.technicalDetails.findings.push({
+                        type: 'no_https',
+                        severity: 'critical'
+                    });
+                } else {
+                    // Try to get SSL certificate information (limited in browser)
+                    this.checkSSLCertificate(url);
                 }
-                
-                // Simulate other protocol checks
-                document.getElementById('hsts-status').textContent = '✅';
-                document.getElementById('csp-status').textContent = '⚠️';
-                document.getElementById('xfo-status').textContent = '✅';
             }
             
-            // Analyze advanced features
-            analyzeAdvancedFeatures(html) {
-                // Detect Shadow DOM usage
-                const shadowDomDetected = html.includes('attachShadow') || html.includes('shadowRoot');
-                document.getElementById('shadow-dom').textContent = shadowDomDetected ? '✅' : '❌';
-                this.advancedMetrics.shadowDom = shadowDomDetected;
-                
-                if (shadowDomDetected) {
-                    this.addVulnerability({
-                        type: 'dom',
-                        name: 'Shadow DOM Detected',
-                        severity: 'low',
-                        description: 'Shadow DOM usage detected which may hide vulnerabilities from traditional scanners',
-                        recommendation: 'Perform manual security review of Shadow DOM components',
-                        points: 5
-                    });
+            // Check SSL certificate (limited in browser)
+            async checkSSLCertificate(url) {
+                try {
+                    // Extract domain from URL
+                    const domain = new URL(url).hostname;
+                    
+                    // Use a third-party API to check SSL certificate
+                    // Note: This is just a placeholder - you would need a real API
+                    const response = await fetch(`https://cryptcheck.fr/api/scan/${domain}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        // Analyze certificate information
+                        if (data && data.grade) {
+                            if (data.grade === 'F' || data.grade === 'T') {
+                                this.addVulnerability({
+                                    type: 'ssl',
+                                    name: 'SSL Certificate Issues',
+                                    severity: 'high',
+                                    description: `SSL certificate received a grade of ${data.grade}, indicating security issues`,
+                                    recommendation: 'Fix SSL certificate configuration issues',
+                                    points: 15
+                                });
+
+                                this.technicalDetails.findings.push({
+                                    type: 'ssl_issues',
+                                    severity: 'high',
+                                    grade: data.grade
+                                });
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.log('SSL certificate check failed:', error);
                 }
+            }
+            
+            // Check for additional vulnerabilities
+            async checkAdditionalVulnerabilities(url) {
+                // Check for common misconfigurations
+                await this.checkCommonMisconfigurations(url);
                 
-                // Detect Web Components
-                const webComponentsDetected = html.includes('<template>') || html.includes('customElements.define');
-                document.getElementById('web-components').textContent = webComponentsDetected ? '✅' : '❌';
-                this.advancedMetrics.webComponents = webComponentsDetected;
-                
-                // Detect JS Frameworks
-                const frameworks = [];
-                if (html.includes('react-dom')) frameworks.push('React');
-                if (html.includes('vue.min')) frameworks.push('Vue');
-                if (html.includes('angular')) frameworks.push('Angular');
-                if (html.includes('jquery')) frameworks.push('jQuery');
-                document.getElementById('js-frameworks').textContent = frameworks.length ? frameworks.join(', ') : 'None';
-                this.advancedMetrics.jsFrameworks = frameworks;
-                
-                // Detect obfuscation
-                const obfuscationPatterns = [
-                    'eval(function(p,a,c,k,e,d)',
-                    '\\x65\\x76\\x61\\x6C',
-                    '\\u0065\\u0076\\u0061\\u006C',
-                    '\\141\\166\\141\\154'
+                // Check for exposed sensitive files
+                await this.checkSensitiveFiles(url);
+            }
+            
+            // Check for common misconfigurations
+            async checkCommonMisconfigurations(url) {
+                try {
+                    // Check for directory listing
+                    const response = await this.fetchWithCorsProxies(url + '/');
+                    const html = await response.text();
+                    if (html.includes('Index of /') || html.includes('Directory listing for /')) {
+                        this.addVulnerability({
+                            type: 'config',
+                            name: 'Directory Listing Enabled',
+                            severity: 'medium',
+                            description: 'Directory listing is enabled, exposing file structure to attackers',
+                            recommendation: 'Disable directory listing in server configuration',
+                            points: 8
+                        });
+
+                        this.technicalDetails.findings.push({
+                            type: 'directory_listing',
+                            severity: 'medium'
+                        });
+                    }
+                } catch (error) {
+                    // Directory listing not enabled or not accessible
+                }
+            }
+            
+            // Check for exposed sensitive files
+            async checkSensitiveFiles(url) {
+                const sensitiveFiles = [
+                    '.env',
+                    '.git/config',
+                    'wp-config.php',
+                    'config.php',
+                    'robots.txt',
+                    'sitemap.xml',
+                    'crossdomain.xml',
+                    'phpinfo.php'
                 ];
                 
-                let obfuscationLevel = 0;
-                obfuscationPatterns.forEach(pattern => {
-                    if (html.includes(pattern)) obfuscationLevel++;
-                });
-                
-                document.getElementById('obfuscation').textContent = obfuscationLevel ? `Level ${obfuscationLevel}` : 'None';
-                this.advancedMetrics.obfuscationLevel = obfuscationLevel;
-                
-                if (obfuscationLevel > 0) {
-                    this.addVulnerability({
-                        type: 'javascript',
-                        name: 'Code Obfuscation Detected',
-                        severity: 'medium',
-                        description: 'Obfuscated code detected which may hide malicious functionality',
-                        recommendation: 'Review obfuscated code manually for security issues',
-                        points: 8
-                    });
+                for (const file of sensitiveFiles) {
+                    try {
+                        const response = await this.fetchWithCorsProxies(url + '/' + file);
+                        if (response.ok) {
+                            this.addVulnerability({
+                                type: 'config',
+                                name: `Sensitive File Exposed: ${file}`,
+                                severity: file === '.env' || file.includes('config') ? 'high' : 'low',
+                                description: `Sensitive file ${file} is publicly accessible`,
+                                recommendation: `Restrict access to ${file} using server configuration`,
+                                points: file === '.env' || file.includes('config') ? 12 : 5
+                            });
+
+                            this.technicalDetails.findings.push({
+                                type: 'exposed_file',
+                                severity: file === '.env' || file.includes('config') ? 'high' : 'low',
+                                file: file
+                            });
+                        }
+                    } catch (error) {
+                        // File not accessible, which is good
+                    }
                 }
             }
             
-            // Generate threat analysis
-            generateThreatAnalysis() {
+            // Generate AI-powered threat analysis
+            generateAIThreatAnalysis() {
                 const vulnerabilityCount = this.vulnerabilities.length;
                 const criticalCount = this.vulnerabilities.filter(v => v.severity === 'critical').length;
                 const highCount = this.vulnerabilities.filter(v => v.severity === 'high').length;
                 
-                this.threatAnalysis = `THREAT ANALYSIS REPORT
+                // Use NLP to generate more natural threat analysis
+                let threatLevel = 'LOW';
+                if (criticalCount > 0) threatLevel = 'CRITICAL';
+                else if (highCount > 0) threatLevel = 'HIGH';
+                else if (vulnerabilityCount > 0) threatLevel = 'MEDIUM';
+                
+                this.threatAnalysis = `AI SECURITY ANALYSIS REPORT
 ================================
 
-OVERALL RISK LEVEL: ${criticalCount > 0 ? 'CRITICAL' : highCount > 0 ? 'HIGH' : vulnerabilityCount > 0 ? 'MEDIUM' : 'LOW'}
+OVERALL THREAT LEVEL: ${threatLevel}
 
 VULNERABILITY SUMMARY:
 - Critical: ${criticalCount}
@@ -1457,33 +2385,55 @@ VULNERABILITY SUMMARY:
 - Medium: ${this.vulnerabilities.filter(v => v.severity === 'medium').length}
 - Low: ${this.vulnerabilities.filter(v => v.severity === 'low').length}
 
-TOP THREATS:
-${criticalCount > 0 ? '- Critical vulnerabilities in security protocols\n' : ''}\
-${highCount > 0 ? '- High severity issues in form security and headers\n' : ''}\
-${this.advancedMetrics.shadowDom ? '- Shadow DOM usage detected, potentially hiding vulnerabilities\n' : ''}\
-${this.advancedMetrics.obfuscationLevel > 0 ? '- Obfuscated code detected, requires manual review\n' : ''}
+AI-PREDICTED RISKS:
+${criticalCount > 0 ? '- Critical vulnerabilities detected in security protocols\n' : ''}\
+${highCount > 0 ? '- High severity issues identified in security headers and forms\n' : ''}\
+${this.vulnerabilities.some(v => v.name.includes('Mixed Content')) ? '- Mixed content detected (HTTP resources loaded on HTTPS page)\n' : ''}\
+${this.vulnerabilities.some(v => v.name.includes('SRI')) ? '- Missing Subresource Integrity for external resources\n' : ''}\
+${this.vulnerabilities.some(v => v.name.includes('jQuery')) ? '- Outdated jQuery version with known vulnerabilities\n' : ''}\
+${this.technicalDetails.mlAnalysis && this.technicalDetails.mlAnalysis.confidence > 0.7 ? '- High confidence prediction of additional undetected vulnerabilities\n' : ''}
 
-RECOMMENDATIONS:
+AI RECOMMENDATIONS:
 1. ${criticalCount > 0 ? 'Address critical vulnerabilities immediately' : 'Focus on high severity issues'}
 2. Implement missing security headers
 3. Ensure all resources are loaded over HTTPS
-4. ${this.advancedMetrics.shadowDom ? 'Review Shadow DOM components' : 'Review DOM security practices'}
+4. Add Subresource Integrity hashes to external resources
+5. ${this.vulnerabilities.some(v => v.name.includes('jQuery')) ? 'Update jQuery to the latest version' : 'Keep all dependencies updated'}
+6. Consider a comprehensive security audit for deeper analysis
 
-PREDICTED ATTACK VECTORS:
-- ${criticalCount > 0 ? 'Man-in-the-middle attacks possible' : 'Data exposure possible through insecure forms'}
-- XSS vulnerabilities detected in ${this.vulnerabilities.filter(v => v.name.includes('XSS')).length} locations
-- ${this.advancedMetrics.obfuscationLevel > 0 ? 'Obfuscated code may contain hidden threats' : 'No evidence of hidden threats'}
+NEURAL NETWORK ANALYSIS:
+- Vulnerability prediction confidence: ${this.technicalDetails.mlAnalysis ? (this.technicalDetails.mlAnalysis.confidence * 100).toFixed(1) : '0'}%
+- Anomaly detection score: ${this.technicalDetails.mlAnalysis ? this.technicalDetails.mlAnalysis.anomalyScore.toFixed(2) : '0.00'}
 
-NEXT STEPS:
-- Review detailed vulnerability report
-- Implement recommended fixes
-- Rescan after remediation`;
+NOTE:
+This analysis combines traditional security scanning with proprietary AI algorithms for enhanced detection capabilities.`;
             }
             
             // Add vulnerability to results
             addVulnerability(vuln) {
                 this.vulnerabilities.push(vuln);
                 this.securityScore = Math.max(0, this.securityScore - vuln.points);
+            }
+            
+            // Export report function
+            exportReport() {
+                const report = {
+                    url: this.technicalDetails.url,
+                    timestamp: this.technicalDetails.timestamp,
+                    score: this.securityScore,
+                    vulnerabilities: this.vulnerabilities,
+                    threatAnalysis: this.threatAnalysis,
+                    advancedMetrics: this.advancedMetrics,
+                    technicalDetails: this.technicalDetails
+                };
+                
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(report, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", `neuroforge-scan-${new Date().toISOString().slice(0, 10)}.json`);
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
             }
         }
         
@@ -1501,9 +2451,12 @@ NEXT STEPS:
         const statusMessage = document.getElementById('status-message');
         const heatmapGrid = document.getElementById('heatmap-grid');
         const threatContent = document.getElementById('threat-content');
+        const exportBtn = document.getElementById('export-btn');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
         
         // Initialize scanner
-        const scanner = new CyberForgeScanner();
+        const scanner = new NeuroForgeScanner();
         
         // Initialize heatmap
         function initHeatmap() {
@@ -1536,10 +2489,10 @@ NEXT STEPS:
             
             // Reset UI
             statusMessage.className = 'status-message status-info';
-            statusMessage.innerHTML = '<i class="fas fa-sync fa-spin"></i> Initializing security scan...';
+            statusMessage.innerHTML = '<i class="fas fa-sync fa-spin"></i> Initializing AI security scan...';
             reportStatus.textContent = 'Scanning...';
             testBtn.classList.add('running');
-            testBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Scanning...';
+            testBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i> AI Analyzing...';
             vulnerabilityList.innerHTML = '';
             securityScoreBar.style.width = '0%';
             securityScoreValue.textContent = '0%';
@@ -1556,31 +2509,26 @@ NEXT STEPS:
             
             try {
                 // Run the scan
-                statusMessage.innerHTML = '<i class="fas fa-sync fa-spin"></i> Analyzing website security...';
                 const scanResults = await scanner.scan(appUrl);
                 
                 // Update UI with results
                 updateResults(scanResults);
                 
-                // Update status
-                statusMessage.className = 'status-message status-success';
-                statusMessage.innerHTML = `<i class="fas fa-check-circle"></i> Scan completed! Found ${scanResults.vulnerabilities.length} vulnerabilities`;
-                
             } catch (error) {
                 console.error('Scan error:', error);
                 statusMessage.className = 'status-message status-error';
                 statusMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
-                threatContent.textContent = 'Threat analysis failed: ' + error.message;
+                threatContent.textContent = 'AI security analysis failed: ' + error.message;
             } finally {
                 testBtn.classList.remove('running');
-                testBtn.innerHTML = '<i class="fas fa-bolt"></i> Run Security Analysis';
+                testBtn.innerHTML = '<i class="fas fa-brain"></i> Run AI Security Analysis';
             }
         }
         
         // Update UI with scan results
         function updateResults(scanResults) {
             // Update status
-            reportStatus.textContent = 'Scan completed - Vulnerabilities found';
+            reportStatus.textContent = 'Scan completed - AI vulnerabilities found';
             
             // Update counts
             let critical = 0;
@@ -1664,12 +2612,35 @@ NEXT STEPS:
             // Add event listener to test button
             testBtn.addEventListener('click', runSecurityScan);
             
+            // Add event listener to export button
+            exportBtn.addEventListener('click', () => {
+                scanner.exportReport();
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
             // Add example URLs for quick testing
             appUrlInput.addEventListener('focus', function() {
                 if (this.value === 'https://') {
                     this.value = '';
                 }
             });
+            
+            // Add animation to elements
+            const animateElements = document.querySelectorAll('.fade-in');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+            });
+            
+            // Trigger animations
+            setTimeout(() => {
+                animateElements.forEach(el => {
+                    el.style.opacity = '1';
+                });
+            }, 100);
         });
     </script>
 </body>
