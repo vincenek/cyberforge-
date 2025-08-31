@@ -1,6 +1,6 @@
 {
-  "name": "cyberforge",
-  "short_name": "cyberforge",
+  "name": "neuroforge",
+  "short_name": "neuroforge",
   "description": "Enterprise Security Scanner",
   "start_url": "https://vincenek.github.io/neuroforge-/",
   "display": "standalone",
